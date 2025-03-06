@@ -1,3 +1,4 @@
+import GenericJsonForm from '../components/GenericJsonForm'
 import { Response } from '../interfaces/ActionCard'
 import { TreeNodeData } from '../interfaces/TreeNodeData'
 
@@ -10,6 +11,6 @@ export class ResponseNodeData implements TreeNodeData {
   }
 
   render() {
-    return <>{JSON.stringify(this.object)}</>
+    return <GenericJsonForm data={this.object} />
   }
 }

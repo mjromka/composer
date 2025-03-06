@@ -1,3 +1,4 @@
+import AssessmentForm from '../components/AssessmentForm'
 import { Assessment } from '../interfaces/ActionCard'
 import { TreeNodeData } from '../interfaces/TreeNodeData'
 
@@ -10,6 +11,6 @@ export class AssessmentNodeData implements TreeNodeData {
   }
 
   render() {
-    return <>{JSON.stringify(this.object)}</>
+    return <AssessmentForm data={this.object} />
   }
 }
