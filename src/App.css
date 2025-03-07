@@ -1,0 +1,8 @@
+.p-tree {
+  @apply h-full w-full overflow-auto;
+}
+
+.p-toggleable-content,
+.p-fieldset-content {
+  @apply h-full p-0;
+}
