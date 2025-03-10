@@ -61,7 +61,7 @@ export interface Fragment {
   tags: Tag[]
   conditionRule?: string
   isRecommendation: boolean
-  widgets: any[]
+  widgets: WidgetData[] | null
   setTags: Tag[]
   scoreBased?: number
   maxScore?: string
@@ -104,6 +104,59 @@ export interface Question {
   data?: Data[]
   conditionRule?: string
 }
+
+/**
+ * Enum for the types of widgets that can be incorporated into various places of the Action Card.
+ */
+export enum WidgetType {
+  GenericAiPrompt = 'GenericAiPrompt',
+  TextToSpeech = 'TextToSpeech',
+  UpdateWithAi = 'UpdateWithAi',
+  CreateCrmObject = 'CreateCrmObject',
+  CodeSnippet = 'CodeSnippet',
+  SetTag = 'SetTag',
+}
+
+/**
+ * Enum for the output modes of the AI widgets (where to display the generated text).
+ */
+export enum WidgetOutputMode {
+  /** Append the generated text under the widget */
+  Add = 'Add',
+  /** Replace the recommendation text with the generated text (#10482) */
+  Replace = 'Replace',
+}
+
+/**
+ * Widget entity: represents an interactive widget
+ * that can be incorporated into various places of the Action Card.
+ */
+export type WidgetData = {
+  /** Unique ID of the widget */
+  id: number
+  /** Type of the widget */
+  type: WidgetType
+  /** Logical rule for applying tag-based conditions */
+  conditionRule: string | null
+  /** Tags that can be used to conditionally show/hide the widget */
+  tags: Tag[] | null
+  /** Tags that can be set by the object in order to influence visibility of other entities */
+  setTags: Tag[] | null
+  /** Object states that can set tags in order to influence visibility of other entities */
+  states: WidgetObjectState[] | null
+}
+
+/**
+ * Object state
+ */
+export interface ObjectState {
+  type: string
+  isActive: boolean | null
+  activeTags: Tag[] | null
+  inactiveTags: Tag[] | null
+}
+
+export type WidgetObjectState = ObjectState & {}
 
 export interface Data {
   id: number
