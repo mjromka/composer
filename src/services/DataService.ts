@@ -7,7 +7,7 @@ export const DataService = {
     if (!response.ok) {
       throw new Error('Failed to fetch template data')
     }
-    const data = await response.json()
+    const data: ActionCard = (await response.json()) as ActionCard
     return data
   },
 
