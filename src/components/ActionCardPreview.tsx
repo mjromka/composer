@@ -1,32 +1,24 @@
 import { useEffect, useRef } from 'react'
 import { ActionCard } from '../interfaces/ActionCard'
+import { theme } from 'antd'
+import { useAppContext } from '../hooks/useAppContext'
 
 declare global {
   interface Window {
-    initActionCards: (dataProvider: { getData: () => Promise<ActionCard | undefined>; getMode: () => string }) => void
+    initActionCards: (dataProvider: { getData: () => ActionCard; getMode: () => string }) => void
   }
 }
 
-interface ActionCardPreviewProps {
-  data: ActionCard | undefined
-  trigger: number
-}
-
-const ActionCardPreview: React.FC<ActionCardPreviewProps> = ({ data, trigger }) => {
+const ActionCardPreview: React.FC = () => {
   const container = useRef<HTMLDivElement>(null)
+  const { actionCard, isDarkMode } = useAppContext()
+  const { token } = theme.useToken()
 
-  useEffect(
-    () => {
-      console.log('ActionCardPreview', data)
+  useEffect(() => {
+    if (actionCard) {
       const dataProvider = {
-        getData: async () => {
-          return new Promise<ActionCard | undefined>(resolve => {
-            resolve(data)
-          })
-        },
-        getMode: () => {
-          return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        },
+        getData: () => actionCard,
+        getMode: () => (useAppContext.getState().isDarkMode ? 'dark' : 'light'),
       }
       if (!customElements.get('action-cards')) {
         window.initActionCards(dataProvider)
@@ -36,14 +28,16 @@ const ActionCardPreview: React.FC<ActionCardPreviewProps> = ({ data, trigger }) 
         actionCards.remove()
       }
       container.current?.appendChild(document.createElement('action-cards'))
-    },
-    // The data prop is not used in the useEffect dependencies array
-    // as we want to debounce the updating using the trigger prop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [trigger],
-  )
+    }
+  }, [actionCard, isDarkMode])
 
-  return <div ref={container}></div>
+  return (
+    <div
+      style={{ backgroundColor: token.colorBgContainer, borderRadius: token.borderRadius }}
+      className="h-full w-full overflow-auto p-2"
+      ref={container}
+    ></div>
+  )
 }
 
 export default ActionCardPreview
