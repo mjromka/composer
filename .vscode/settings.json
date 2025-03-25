@@ -15,7 +15,7 @@
     ".vscode-insiders",
     ".gitignore"
   ],
-  "cSpell.words": ["Avenir", "grayscale", "rgba"],
+  "cSpell.words": ["anticon", "Avenir", "grayscale", "Linkando", "rgba"],
   "files.associations": {
     "*.css": "tailwindcss"
   }
