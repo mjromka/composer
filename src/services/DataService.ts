@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActionCard } from '../interfaces/ActionCard'
+import { ActionCard, Assessment, ElementKind, Fragment, Question } from '../interfaces/ActionCard'
 
 export const DataService = {
   getTemplateData: async (template: string) => {
@@ -57,6 +57,11 @@ export const DataService = {
         if (element) {
           reorderElement(section.questions, element)
         }
+      } else if (section.elements) {
+        element = section.elements.find(e => e.id === elementKey)
+        if (element) {
+          reorderElement(section.elements, element)
+        }
       }
 
       return updatedData
@@ -84,6 +89,19 @@ export const DataService = {
         for (const question of section.questions) {
           if (question.id === key) {
             return { type: 'question', object: question }
+          }
+        }
+      } else if (section.elements) {
+        for (const element of section.elements) {
+          if (element.id === key) {
+            switch (element.kind) {
+              case ElementKind.ASSESSMENT:
+                return { type: 'assessment', object: element as Assessment }
+              case ElementKind.RECOMMENDATION:
+                return { type: 'fragment', object: element as Fragment }
+              case ElementKind.QUESTION:
+                return { type: 'question', object: element as Question }
+            }
           }
         }
       }
@@ -121,6 +139,13 @@ export const DataService = {
         for (const question of section.questions) {
           if (question.id === updatedObject.id) {
             Object.assign(question, updatedObject)
+          }
+        }
+      }
+      if (section.elements) {
+        for (const element of section.elements) {
+          if (element.id === updatedObject.id) {
+            Object.assign(element, updatedObject)
           }
         }
       }

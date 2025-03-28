@@ -1,4 +1,4 @@
-import { Section, Assessment, Fragment, Response, Question, ActionCard } from '../interfaces/ActionCard'
+import { Section, Assessment, Fragment, Response, Question, ActionCard, ElementKind } from '../interfaces/ActionCard'
 import { TreeDataNode } from 'antd'
 import { CheckSquareFilled, ContainerFilled, EditFilled, LineOutlined, ReadFilled } from '@ant-design/icons'
 import React from 'react'
@@ -69,6 +69,18 @@ function mapChildren(section: Section) {
   }
   if (section.questions) {
     return section.questions.map(mapQuestion)
+  }
+  if (section.elements) {
+    return section.elements.map(element => {
+      switch (element.kind) {
+        case ElementKind.ASSESSMENT:
+          return mapAssessment(element as Assessment)
+        case ElementKind.RECOMMENDATION:
+          return mapFragment(element as Fragment)
+        case ElementKind.QUESTION:
+          return mapQuestion(element as Question)
+      }
+    })
   }
 }
 
