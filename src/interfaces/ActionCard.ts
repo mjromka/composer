@@ -34,6 +34,7 @@ export interface Section {
   scoreBased?: number
   maxScore?: string
   minScore?: string
+  elements?: Element[]
 }
 
 export interface Widget {
@@ -104,6 +105,14 @@ export interface Question {
   data?: Data[]
   conditionRule?: string
 }
+
+export enum ElementKind {
+  ASSESSMENT = 'Assessment',
+  RECOMMENDATION = 'Recommendation',
+  QUESTION = 'Question',
+}
+
+export type Element = Partial<Question & Assessment & Fragment> & { kind: ElementKind }
 
 /**
  * Enum for the types of widgets that can be incorporated into various places of the Action Card.
