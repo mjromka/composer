@@ -1,8 +1,7 @@
 import { ActionCard } from './ActionCard'
 import { ChangeInfo } from './ChangeInfo'
 
-export interface AppContextType {
-  actionCard: ActionCard | undefined
+export interface ComposerSettings {
+  dataUrl: string
   onChange: (data: ActionCard, info?: ChangeInfo) => void
-  isDarkMode: boolean
 }

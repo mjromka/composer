@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .anticon {
   @apply opacity-75 dark:opacity-100;
 }

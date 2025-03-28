@@ -2,22 +2,22 @@ import { createContext, useState, useEffect, ReactNode, useMemo } from 'react'
 import { ActionCard } from './interfaces/ActionCard'
 import { AppContextType } from './interfaces/AppContextType'
 import { useAppContext } from './hooks/useAppContext'
+import { ComposerSettings } from './interfaces/ComposerSettings'
+import { ChangeInfo } from './interfaces/ChangeInfo'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const Context = createContext<AppContextType | undefined>(undefined)
-const urlParams = new URLSearchParams(window.location.search)
 
-export const AppContext = ({ children }: { children: ReactNode }) => {
+export const AppContext = ({ children, settings }: { children: ReactNode; settings: ComposerSettings }) => {
   const [data, setData] = useState<ActionCard | undefined>(undefined)
   const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches)
 
   useEffect(() => {
-    const template = urlParams.get('template')
-    fetch(template ? template : '/data.json')
+    fetch(settings.dataUrl)
       .then(response => response.json() as Promise<ActionCard>)
       .then(data => setData(data))
       .catch(error => console.error('Error loading data:', error))
-  }, [])
+  }, [settings.dataUrl])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -32,12 +32,14 @@ export const AppContext = ({ children }: { children: ReactNode }) => {
     () => ({
       actionCard: data,
       isDarkMode: isDarkMode,
-      onChange: (updatedData: ActionCard) => {
-        console.log('💾 Data changed:', updatedData)
+      onChange: (updatedData: ActionCard, info?: ChangeInfo) => {
         setData(updatedData)
+        if (settings.onChange) {
+          settings.onChange(updatedData, info)
+        }
       },
     }),
-    [data, isDarkMode],
+    [data, isDarkMode, settings],
   )
 
   useEffect(() => {

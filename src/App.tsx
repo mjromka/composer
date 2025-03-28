@@ -1,5 +1,4 @@
 import { Layout } from 'antd'
-import './App.css'
 import Navigation from './components/Navigation'
 import ActionCardPreview from './components/ActionCardPreview'
 import FormPlaceholder from './components/FormPlaceholder'
@@ -18,7 +17,7 @@ function App() {
   }
 
   return (
-    <Layout className="h-screen w-screen flex flex-row gap-0">
+    <Layout className="h-full w-full flex flex-row gap-0">
       <Content className="w-1/4 p-4">
         <Navigation onSelect={onSelect} />
       </Content>

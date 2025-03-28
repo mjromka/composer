@@ -6,10 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
     <title>Linkando Composer</title>
+    <link rel="stylesheet" href="/index.css" />
+    <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/loader.js"></script>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      initComposer('root', {
+        dataUrl: '/data.json',
+        onChange: (data, info) => {
+          console.log('💾', data, info)
+        },
+      })
+    </script>
   </body>
 </html>
