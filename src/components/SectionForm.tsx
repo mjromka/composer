@@ -2,6 +2,7 @@ import { Form, Input, Select, Switch } from 'antd'
 import { Section } from '../interfaces/ActionCard'
 import { DataService } from '../services/DataService'
 import { useAppContext } from '../hooks/useAppContext'
+import { ChangeType } from '../interfaces/ChangeInfo'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -26,7 +27,7 @@ const SectionForm: React.FC<FormProps> = ({ data }) => {
     clearTimeout(debounceTimer)
     debounceTimer = setTimeout(() => {
       const updatedCard = DataService.update(actionCard!, newData)
-      onChange(updatedCard)
+      onChange(updatedCard, { type: ChangeType.Edit, key: data.id })
     }, 1000)
   }
 
