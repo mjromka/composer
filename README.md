@@ -21,3 +21,9 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## Integration
+
+`composer.js` has to be added as script `type=module` to avoid interference from local scripts.
+
+See `index.html` for example

@@ -5,6 +5,7 @@ import { NodeService } from '../services/NodeService'
 import { allowDrop } from '../utils/tree'
 import { DataService } from '../services/DataService'
 import { useAppContext } from '../hooks/useAppContext'
+import { ChangeType } from '../interfaces/ChangeInfo'
 
 const { Search } = Input
 
@@ -93,7 +94,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSelect }) => {
     const sectionKey = NodeService.getParentKey(elementKey, tree)
 
     const updatedData = DataService.reorder(sectionKey, elementKey, dropPosition, dropToGap, actionCard!)
-    onChange(updatedData)
+    onChange(updatedData, { type: ChangeType.Reorder, key: sectionKey })
   }
 
   return (

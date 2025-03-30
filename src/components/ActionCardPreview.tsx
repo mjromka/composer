@@ -1,13 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { ActionCard } from '../interfaces/ActionCard'
 import { theme } from 'antd'
 import { useAppContext } from '../hooks/useAppContext'
+import { initActionCards } from '../utils/actionCards'
 
-declare global {
-  interface Window {
-    initActionCards: (dataProvider: { getData: () => ActionCard; getMode: () => string }) => void
-  }
-}
+let isInitialized = false
 
 const ActionCardPreview: React.FC = () => {
   const container = useRef<HTMLDivElement>(null)
@@ -15,19 +11,24 @@ const ActionCardPreview: React.FC = () => {
   const { token } = theme.useToken()
 
   useEffect(() => {
-    if (actionCard) {
-      const dataProvider = {
-        getData: () => actionCard,
-        getMode: () => (useAppContext.getState().isDarkMode ? 'dark' : 'light'),
-      }
-      if (!customElements.get('action-cards')) {
-        window.initActionCards(dataProvider)
-      }
+    const refresh = () => {
       const actionCards = container.current?.querySelector('action-cards')
       if (actionCards) {
         actionCards.remove()
       }
       container.current?.appendChild(document.createElement('action-cards'))
+    }
+    if (actionCard) {
+      const dataProvider = {
+        getData: () => actionCard,
+        getMode: () => (useAppContext.getState().isDarkMode ? 'dark' : 'light'),
+      }
+      if (!isInitialized) {
+        isInitialized = true
+        initActionCards(dataProvider).then(refresh).catch(console.error)
+      } else {
+        refresh()
+      }
     }
   }, [actionCard, isDarkMode])
 
