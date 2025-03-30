@@ -9,11 +9,16 @@ import { StyleProvider } from '@ant-design/cssinjs'
 import { ComposerSettings } from './interfaces/ComposerSettings.ts'
 
 // eslint-disable-next-line react-refresh/only-export-components
-const Root = () => {
+const Root: React.FC<{ container: HTMLElement }> = ({ container }) => {
   const { isDarkMode } = useAppContext()
 
   return (
-    <ConfigProvider theme={{ cssVar: true, algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
+    <ConfigProvider
+      getPopupContainer={() => {
+        return container
+      }}
+      theme={{ cssVar: true, algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm }}
+    >
       <App />
     </ConfigProvider>
   )
@@ -36,7 +41,7 @@ export const initComposer = (containerId: string, settings: ComposerSettings) =>
     <StrictMode>
       <AppContext settings={settings}>
         <StyleProvider container={shadowRoot}>
-          <Root />
+          <Root container={shadowRoot as unknown as HTMLElement} />
         </StyleProvider>
       </AppContext>
     </StrictMode>,

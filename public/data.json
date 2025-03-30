@@ -1,16 +1,198 @@
 {
   "sections": [
     {
+      "id": 135680,
+      "name": "Container 🫙",
+      "hint": null,
+      "color": { "rank": 5, "color": "#E1E1E1", "id": 1851, "name": "Grey" },
+      "colorCode": "Grey",
+      "type": "Content",
+      "tags": [],
+      "isAutoCollapse": false,
+      "rank": 1,
+      "parent": 0,
+      "isRecommendation": false,
+      "isOpened": true,
+      "_originalId": 0,
+      "isExcludedFromAi": false,
+      "recType": null,
+      "collapsePreviousHeader": false,
+      "showWidgets": false,
+      "elements": [
+        {
+          "id": 141669,
+          "kind": "Question",
+          "type": "Text",
+          "text": "First Name 1️⃣",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": "first_name"
+        },
+        {
+          "id": 141670,
+          "kind": "Question",
+          "type": "Text",
+          "text": "Last Name 2️⃣",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": null
+        },
+        {
+          "id": 135682,
+          "kind": "Assessment",
+          "type": "multi select",
+          "question": "Test assessment [multi]",
+          "responses": [
+            {
+              "id": 141662,
+              "answer": "Option 1",
+              "rank": 10,
+              "tags": [{ "id": 9901, "name": "opt-1" }],
+              "_originalId": 0,
+              "checked": false,
+              "flow": "play",
+              "superScore": false
+            },
+            {
+              "id": 141663,
+              "answer": "Option 2",
+              "rank": 10,
+              "tags": [{ "id": 9902, "name": "opt-2" }],
+              "_originalId": 0,
+              "checked": false,
+              "flow": "play",
+              "superScore": false
+            },
+            {
+              "id": 141664,
+              "answer": "Option 3",
+              "rank": 10,
+              "tags": [{ "id": 9903, "name": "opt-3" }],
+              "_originalId": 0,
+              "checked": false,
+              "flow": "play",
+              "superScore": false
+            }
+          ],
+          "tags": [],
+          "hasFreeText": false,
+          "_originalId": 0,
+          "altScoring": false,
+          "altScoringMax": false,
+          "autoSelectFirstChoice": false,
+          "superScore": false
+        },
+        {
+          "id": 135681,
+          "kind": "Question",
+          "type": "Checkbox",
+          "text": "Enabled ✅",
+          "rank": 10,
+          "tags": [
+            { "id": 9901, "name": "opt-1" },
+            { "id": 9902, "name": "opt-2" }
+          ],
+          "conditionRule": "OR",
+          "_originalId": 0,
+          "code": null
+        },
+        {
+          "id": 141661,
+          "kind": "Recommendation",
+          "name": "Recommendation short",
+          "text": "<p><span style=\"background-color: #f1c40f;\">Very</span></p>\n<p><strong>simple</strong></p>\n<p><em>one</em></p>",
+          "tags": [],
+          "isRecommendation": false,
+          "widgets": [],
+          "setTags": []
+        },
+        {
+          "id": 141665,
+          "kind": "Assessment",
+          "type": "single select",
+          "question": "Single choice",
+          "responses": [
+            {
+              "id": 141666,
+              "answer": "Eins",
+              "rank": 10,
+              "tags": [],
+              "_originalId": 0,
+              "checked": false,
+              "flow": "play",
+              "superScore": false
+            },
+            {
+              "id": 141667,
+              "answer": "Zwei",
+              "rank": 10,
+              "tags": [],
+              "_originalId": 0,
+              "checked": false,
+              "flow": "play",
+              "superScore": false
+            },
+            {
+              "id": 141668,
+              "answer": "Drei",
+              "rank": 10,
+              "tags": [],
+              "_originalId": 0,
+              "checked": false,
+              "flow": "play",
+              "superScore": false
+            }
+          ],
+          "tags": [],
+          "hasFreeText": false,
+          "_originalId": 0,
+          "altScoring": false,
+          "altScoringMax": false,
+          "autoSelectFirstChoice": false,
+          "superScore": false
+        },
+        {
+          "id": 141671,
+          "kind": "Question",
+          "type": "Dropdown",
+          "text": "Industry",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": null,
+          "data": [
+            { "id": 0, "name": "Banking", "rank": 10 },
+            { "id": 1, "name": "Insurance", "rank": 10 },
+            { "id": 2, "name": "Media", "rank": 10 },
+            { "id": 3, "name": "Real Estate", "rank": 10 },
+            { "id": 4, "name": "IT", "rank": 10 }
+          ]
+        },
+        {
+          "id": 141659,
+          "kind": "Recommendation",
+          "name": "Recommendation long",
+          "text": "<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\"><span style=\"box-sizing: border-box; font-size: 18px; font-family: monospace;\">Quill Rich Text Editor123</span></p>\n<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\"> </p>\n<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\">Quill is a free, <a style=\"box-sizing: border-box; color: #0066cc; text-decoration: underline;\" href=\"https://github.com/quilljs/quill/\" target=\"_blank\" rel=\"noopener\">open source</a> WYSIWYG editor built for the modern web. With its <a style=\"box-sizing: border-box; color: #0066cc; text-decoration: underline;\" href=\"http://quilljs.com/docs/modules/\" target=\"_blank\" rel=\"noopener\">extensible architecture</a> and a <a style=\"box-sizing: border-box; color: #0066cc; text-decoration: underline;\" href=\"http://quilljs.com/docs/api/\" target=\"_blank\" rel=\"noopener\">expressive API</a> you can completely customize it to fulfill your needs. Some built in features include:</p>\n<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\"> </p>\n<ul style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px 0px 0px 1.5em; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\">\n<li style=\"box-sizing: border-box; list-style-type: none; padding-left: 1.5em;\">Fast and lightweight</li>\n<li style=\"box-sizing: border-box; list-style-type: none; padding-left: 1.5em;\">Semantic markup</li>\n<li style=\"box-sizing: border-box; list-style-type: none; padding-left: 1.5em;\">Standardized HTML between browsers</li>\n<li style=\"box-sizing: border-box; list-style-type: none; padding-left: 1.5em;\">Cross browser support including Chrome, Firefox, Safari, and IE 9+</li>\n</ul>\n<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\"> </p>\n<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\"><span style=\"box-sizing: border-box; font-size: 18px;\">Downloads</span></p>\n<p style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\"> </p>\n<ul style=\"font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; margin: 0px; padding: 0px 0px 0px 1.5em; counter-reset: list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0; caret-color: #000000; color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; text-align: left;\">\n<li style=\"box-sizing: border-box; list-style-type: none; padding-left: 1.5em;\"><a style=\"box-sizing: border-box; color: #0066cc; text-decoration: underline;\" href=\"https://quilljs.com/\" target=\"_blank\" rel=\"noopener\">Quill.js</a>, the free, open source WYSIWYG editor</li>\n<li style=\"box-sizing: border-box; list-style-type: none; padding-left: 1.5em;\"><a style=\"box-sizing: border-box; color: #0066cc; text-decoration: underline;\" href=\"https://zenoamaro.github.io/react-quill\" target=\"_blank\" rel=\"noopener\">React-quill</a>, a React component that wraps Quill.js</li>\n</ul>",
+          "tags": [],
+          "isRecommendation": false,
+          "widgets": [],
+          "setTags": []
+        }
+      ]
+    },
+    {
       "id": 37817,
-      "name": "Empty Info section top 1",
+      "name": "Empty Info section top",
       "hint": null,
       "color": { "rank": 5, "color": "#E1E1E1", "id": 1851, "name": "Grey" },
       "colorCode": "Grey",
       "type": "Information",
-      "text": null,
+      "text": "<p>abc</p>\n<p> </p>\n<p>123</p>",
       "tags": [],
       "isAutoCollapse": false,
-      "rank": 1,
+      "rank": 2,
       "parent": 0,
       "isRecommendation": false,
       "isOpened": false,
@@ -18,7 +200,19 @@
       "isExcludedFromAi": false,
       "recType": 2257,
       "collapsePreviousHeader": false,
-      "fragments": [],
+      "elementIds": [],
+      "fragments": [
+        {
+          "id": 141248,
+          "kind": "Recommendation",
+          "name": "Test",
+          "text": "<p>abc</p>",
+          "tags": [],
+          "isRecommendation": false,
+          "widgets": [],
+          "setTags": []
+        }
+      ],
       "widgets": []
     },
     {
@@ -40,9 +234,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "assessment": [
         {
           "id": 87592,
+          "kind": "Assessment",
           "type": "multi select",
           "question": "**Multi** select",
           "responses": [
@@ -67,6 +263,7 @@
         },
         {
           "id": 112791,
+          "kind": "Assessment",
           "type": "single select",
           "question": "Are you interested?",
           "responses": [
@@ -129,9 +326,11 @@
       "isExcludedFromAi": false,
       "recType": 2257,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [
         {
           "id": 60777,
+          "kind": "Recommendation",
           "name": "Nur Tag",
           "text": "<p><span style=\"background-color: #e03e2d;\"><strong>empty</strong></span></p>",
           "tags": [{ "id": 3135, "name": "additional-nfo" }],
@@ -142,6 +341,7 @@
         },
         {
           "id": 60774,
+          "kind": "Recommendation",
           "name": "Additional Info",
           "text": "<p style=\"box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: rgba(0, 0, 0, 0.87); font-family: Roboto, Arial, sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.16px;\">We need to expand the model of recommendations in action cards so that a single recommendation section can hold multiple recommendations with different conditions and scopes:</p>\n<p style=\"box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: rgba(0, 0, 0, 0.87); font-family: Roboto, Arial, sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.16px;\">Was is currently a 1:1 logic, means that a recommendation section has 1 text, 2 scope and 1 conditions ruke needs to be expanded into 1 1:n logic, like with questions inside an assessment section:</p>\n<p style=\"box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: rgba(0, 0, 0, 0.87); font-family: Roboto, Arial, sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.16px;\">Change logic that the section can hold multiple sub recommendations, each with the same logic as the current system.</p>\n<p style=\"box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: rgba(0, 0, 0, 0.87); font-family: Roboto, Arial, sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.16px;\">Benefit: We reduce the number of sections on a card. We already see cases where we show 2-3 section underneath each other and that can be confusing...</p>\n<p style=\"box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: rgba(0, 0, 0, 0.87); font-family: Roboto, Arial, sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.16px;\">I would suggest to keep the current recommendation as \"first\" recommendation in place as it will be sufficient in many cases, but to add the ability to define \"sub\" recommendations as a list (like questions in an assessment). From a UI perspective, they show up as a list (if multiple are displayed) with the \"first\" being at the top.</p>\n<p><span style=\"color: rgb(0, 0, 0); font-family: 'Segoe UI VSS (Regular)', 'Segoe UI', -apple-system, 'system-ui', Roboto, 'Helvetica Neue', Helvetica, Ubuntu, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">TBC: \"scopes\" or \"scores\"</span></p>",
           "tags": [{ "id": 3135, "name": "additional-nfo" }],
@@ -155,6 +355,7 @@
         },
         {
           "id": 60778,
+          "kind": "Recommendation",
           "name": "Only Limit",
           "text": "<p>Here is nothing to say...</p>",
           "tags": [],
@@ -187,9 +388,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "questions": [
         {
           "id": 37799,
+          "kind": "Question",
           "type": "Dropdown",
           "text": "Select a **value** in this dropdown",
           "rank": 1,
@@ -209,6 +412,7 @@
         },
         {
           "id": 37800,
+          "kind": "Question",
           "type": "Checkbox",
           "text": "Check a box",
           "rank": 2,
@@ -218,6 +422,7 @@
         },
         {
           "id": 37809,
+          "kind": "Question",
           "type": "Dropdown",
           "text": "Another DD with no values",
           "rank": 3,
@@ -226,10 +431,29 @@
           "code": null,
           "data": []
         },
-        { "id": 40392, "type": "Date", "text": "date edit", "rank": 10, "tags": [], "_originalId": 0, "code": "date" },
-        { "id": 40393, "type": "Amount", "text": "Amount", "rank": 10, "tags": [], "_originalId": 0, "code": "amount" },
+        {
+          "id": 40392,
+          "kind": "Question",
+          "type": "Date",
+          "text": "date edit",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": "date"
+        },
+        {
+          "id": 40393,
+          "kind": "Question",
+          "type": "Amount",
+          "text": "Amount",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": "amount"
+        },
         {
           "id": 40394,
+          "kind": "Question",
           "type": "LongText",
           "text": "Long text",
           "rank": 10,
@@ -237,9 +461,37 @@
           "_originalId": 0,
           "code": "long_text"
         },
-        { "id": 40395, "type": "Number", "text": "Number", "rank": 10, "tags": [], "_originalId": 0, "code": "number" },
-        { "id": 79443, "type": "Text", "text": "Text", "rank": 10, "tags": [], "_originalId": 0, "code": "text" },
-        { "id": 87547, "type": "Email", "text": "Email", "rank": 10, "tags": [], "_originalId": 0, "code": null }
+        {
+          "id": 40395,
+          "kind": "Question",
+          "type": "Number",
+          "text": "Number",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": "number",
+          "thousand": false
+        },
+        {
+          "id": 79443,
+          "kind": "Question",
+          "type": "Text",
+          "text": "Text",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": "text"
+        },
+        {
+          "id": 87547,
+          "kind": "Question",
+          "type": "Email",
+          "text": "Email",
+          "rank": 10,
+          "tags": [],
+          "_originalId": 0,
+          "code": null
+        }
       ]
     },
     {
@@ -260,7 +512,8 @@
       "recType": null,
       "collapsePreviousHeader": false,
       "showWidgets": false,
-      "isSetTagsEnabled": false
+      "isSetTagsEnabled": false,
+      "elementIds": []
     },
     {
       "id": 79442,
@@ -280,6 +533,29 @@
       "isExcludedFromAi": false,
       "recType": 2257,
       "collapsePreviousHeader": false,
+      "elementIds": [],
+      "fragments": [],
+      "widgets": []
+    },
+    {
+      "id": 141251,
+      "name": "tets",
+      "hint": null,
+      "color": { "rank": 4, "color": "#418EF5", "id": 1850, "name": "Blue" },
+      "colorCode": "Blue",
+      "type": "Information",
+      "text": "<p>abc123</p>",
+      "tags": [],
+      "isAutoCollapse": false,
+      "rank": 2147483647,
+      "parent": 37817,
+      "isRecommendation": false,
+      "isOpened": true,
+      "_originalId": 0,
+      "isExcludedFromAi": false,
+      "recType": 2255,
+      "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
     },
@@ -290,7 +566,7 @@
       "colorCode": "Grey",
       "type": "Separator",
       "isAutoCollapse": false,
-      "rank": 2,
+      "rank": 3,
       "parent": 0,
       "isRecommendation": false,
       "isOpened": true,
@@ -299,7 +575,8 @@
       "recType": null,
       "collapsePreviousHeader": false,
       "showWidgets": false,
-      "isSetTagsEnabled": false
+      "isSetTagsEnabled": false,
+      "elementIds": []
     },
     {
       "id": 37819,
@@ -320,9 +597,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "assessment": [
         {
           "id": 37820,
+          "kind": "Assessment",
           "type": "single select",
           "question": "Which VC tool do you use?",
           "responses": [
@@ -387,6 +666,7 @@
         },
         {
           "id": 63900,
+          "kind": "Assessment",
           "type": "single select",
           "question": "Zoom or Teams is selected!",
           "responses": [],
@@ -424,9 +704,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "assessment": [
         {
           "id": 37983,
+          "kind": "Assessment",
           "type": "single select",
           "question": "Do you use OTC?",
           "responses": [
@@ -461,6 +743,7 @@
         },
         {
           "id": 54672,
+          "kind": "Assessment",
           "type": "single select",
           "question": "Is this the only version of Zoom you use?",
           "responses": [
@@ -516,6 +799,7 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "questions": []
     },
     {
@@ -537,6 +821,7 @@
       "isExcludedFromAi": false,
       "recType": 2257,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
     },
@@ -559,6 +844,7 @@
       "isExcludedFromAi": false,
       "recType": 2257,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
     },
@@ -569,7 +855,7 @@
       "colorCode": "Grey",
       "type": "Separator",
       "isAutoCollapse": false,
-      "rank": 3,
+      "rank": 4,
       "parent": 0,
       "isRecommendation": false,
       "isOpened": false,
@@ -578,7 +864,8 @@
       "recType": null,
       "collapsePreviousHeader": true,
       "showWidgets": false,
-      "isSetTagsEnabled": false
+      "isSetTagsEnabled": false,
+      "elementIds": []
     },
     {
       "id": 39990,
@@ -599,9 +886,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "questions": [
         {
           "id": 39991,
+          "kind": "Question",
           "type": "Text",
           "text": "Zoom Account",
           "rank": 10,
@@ -612,6 +901,7 @@
         },
         {
           "id": 39992,
+          "kind": "Question",
           "type": "Text",
           "text": "MS Teams Account",
           "rank": 10,
@@ -622,6 +912,7 @@
         },
         {
           "id": 39993,
+          "kind": "Question",
           "type": "Text",
           "text": "Google Account",
           "rank": 10,
@@ -632,6 +923,7 @@
         },
         {
           "id": 39994,
+          "kind": "Question",
           "type": "LongText",
           "text": "Other Account",
           "rank": 10,
@@ -662,6 +954,7 @@
       "isExcludedFromAi": false,
       "recType": 2257,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
     },
@@ -683,6 +976,7 @@
       "isExcludedFromAi": false,
       "recType": 2255,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
     },
@@ -695,7 +989,7 @@
       "type": "Assessment",
       "tags": [],
       "isAutoCollapse": false,
-      "rank": 5,
+      "rank": 6,
       "parent": 0,
       "isRecommendation": false,
       "isOpened": true,
@@ -705,9 +999,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "assessment": [
         {
           "id": 115426,
+          "kind": "Assessment",
           "type": "multi select",
           "question": "Select first two",
           "responses": [
@@ -774,6 +1070,7 @@
       "isExcludedFromAi": false,
       "recType": 2255,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": [],
       "setTags": [{ "id": 8035, "name": "super-tag-1-2" }]
@@ -795,9 +1092,11 @@
       "isExcludedFromAi": false,
       "recType": 2256,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [
         {
           "id": 119407,
+          "kind": "Recommendation",
           "name": "Tags 2 and 3 selected",
           "text": "<p>I have selected 2 and 3</p>",
           "tags": [],
@@ -807,6 +1106,7 @@
         },
         {
           "id": 122705,
+          "kind": "Recommendation",
           "name": "Tags 1 and 3 selected",
           "text": null,
           "tags": [],
@@ -837,9 +1137,11 @@
       "collapsePreviousHeader": false,
       "showWidgets": false,
       "isSetTagsEnabled": false,
+      "elementIds": [],
       "questions": [
         {
           "id": 115432,
+          "kind": "Question",
           "type": "Checkbox",
           "text": "Do you see it?",
           "rank": 10,
@@ -868,6 +1170,7 @@
       "isExcludedFromAi": false,
       "recType": 2255,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
     },
@@ -890,12 +1193,34 @@
       "isExcludedFromAi": false,
       "recType": 2255,
       "collapsePreviousHeader": false,
+      "elementIds": [],
       "fragments": [],
       "widgets": []
+    },
+    {
+      "id": 135395,
+      "name": "Notes",
+      "hint": null,
+      "color": { "rank": 4, "color": "#418EF5", "id": 1850, "name": "Blue" },
+      "colorCode": "Blue",
+      "type": "Notes",
+      "tags": [],
+      "isAutoCollapse": false,
+      "rank": 7,
+      "parent": 0,
+      "isRecommendation": false,
+      "isOpened": true,
+      "_originalId": 0,
+      "isExcludedFromAi": false,
+      "recType": null,
+      "collapsePreviousHeader": false,
+      "showWidgets": false,
+      "isSetTagsEnabled": false,
+      "elementIds": []
     }
   ],
   "name": "Action Card 1",
   "templateId": 37795,
-  "isUiSimple": false,
+  "isUiSimple": true,
   "scoreMode": "Entire"
 }
