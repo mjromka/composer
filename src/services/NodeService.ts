@@ -1,6 +1,6 @@
 import { Section, Assessment, Fragment, Response, Question, ActionCard, ElementKind } from '../interfaces/ActionCard'
 import { TreeDataNode } from 'antd'
-import { CheckSquareFilled, ContainerFilled, EditFilled, LineOutlined, ReadFilled } from '@ant-design/icons'
+import { CheckSquareFilled, ContainerFilled, EditFilled, InfoCircleFilled, LineOutlined } from '@ant-design/icons'
 import React from 'react'
 
 export const NodeService = {
@@ -105,7 +105,7 @@ function mapFragment(fragment: Fragment): TreeDataNode {
   return {
     key: fragment.id,
     title: fragment.name,
-    icon: React.createElement(ReadFilled),
+    icon: React.createElement(InfoCircleFilled),
   } as TreeDataNode
 }
 
