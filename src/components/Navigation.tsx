@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Empty, Input, Tree } from 'antd'
 import type { TreeDataNode, TreeProps } from 'antd'
 import { NodeService } from '../services/NodeService'
-import { allowDrop } from '../utils/tree'
+import { allowDrag, allowDrop } from '../utils/tree'
 import { DataService } from '../services/DataService'
 import { useAppContext } from '../hooks/useAppContext'
 import { ChangeType } from '../interfaces/ChangeInfo'
@@ -92,9 +92,10 @@ const Navigation: React.FC<NavigationProps> = ({ onSelect }) => {
     const dropPosition = info.dropPosition
     const dropToGap = info.dropToGap
     const sectionKey = NodeService.getParentKey(elementKey, tree)
-
-    const updatedData = DataService.reorder(sectionKey, elementKey, dropPosition, dropToGap, actionCard!)
-    onChange(updatedData, { type: ChangeType.Reorder, key: sectionKey })
+    if (sectionKey) {
+      const updatedData = DataService.reorder(sectionKey, elementKey, dropPosition, dropToGap, actionCard!)
+      onChange(updatedData, { type: ChangeType.Reorder, key: sectionKey })
+    }
   }
 
   return (
@@ -104,7 +105,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSelect }) => {
       {!noData && (
         <Tree
           className="flex-1 overflow-auto p-2"
-          draggable
+          draggable={allowDrag}
           onDrop={onDrop}
           onExpand={onExpand}
           expandedKeys={expandedKeys}
