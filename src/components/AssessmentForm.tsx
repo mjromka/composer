@@ -1,8 +1,8 @@
-import { Form, Input, Select, Switch } from 'antd'
+import { Form, Input, Select } from 'antd'
 import { Assessment } from '../interfaces/ActionCard'
-import { DataService } from '../services/DataService'
-import { useAppContext } from '../hooks/useAppContext'
-import { ChangeType } from '../interfaces/ChangeInfo'
+import FormSwitch from './ui/FormSwitch'
+import { useSaveForm } from '../hooks/useSaveForm'
+import { mapTags } from '../utils/form'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -11,24 +11,40 @@ interface FormProps {
   data: Assessment
 }
 
-let debounceTimer: number
-
 const AssessmentForm: React.FC<FormProps> = ({ data }) => {
   const [form] = Form.useForm()
 
-  const { actionCard, onChange } = useAppContext()
+  const saveForm = useSaveForm()
 
-  interface ChangedValues {
-    [key: string]: unknown
+  const typeUpdated = (prev: Assessment, curr: Assessment) => {
+    return prev.type !== curr.type
   }
 
-  const handleFormChange = (changedValues: ChangedValues) => {
-    const newData = { ...data, ...changedValues }
-    clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => {
-      const updatedCard = DataService.update(actionCard!, newData)
-      onChange(updatedCard, { type: ChangeType.Edit, key: data.id })
-    }, 1000)
+  const customFormValues = {
+    _scoringType: data.altScoring ? 'altScoring' : data.altScoringMax ? 'altScoringMax' : '',
+    _stringTags: data.tags?.map(tag => tag.name),
+  }
+
+  const getModifiedData = (changedValues: { _scoringType: string; _stringTags: string[] }) => {
+    if (changedValues._scoringType !== undefined) {
+      return {
+        ...data,
+        altScoring: changedValues._scoringType === 'altScoring',
+        altScoringMax: changedValues._scoringType === 'altScoringMax',
+      }
+    } else if (changedValues._stringTags) {
+      return {
+        ...data,
+        tags: mapTags(changedValues._stringTags, data),
+      }
+    } else {
+      return { ...data, ...changedValues }
+    }
+  }
+
+  const handleFormChange = (changedValues: { _scoringType: string; _stringTags: string[] }) => {
+    const newData = getModifiedData(changedValues)
+    saveForm(newData)
   }
 
   return (
@@ -37,8 +53,9 @@ const AssessmentForm: React.FC<FormProps> = ({ data }) => {
       form={form}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
-      initialValues={data}
+      initialValues={{ ...data, ...customFormValues }}
       onValuesChange={handleFormChange}
+      colon={false}
     >
       <Form.Item label="Type" name="type">
         <Select>
@@ -47,36 +64,46 @@ const AssessmentForm: React.FC<FormProps> = ({ data }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Question" name="question" rules={[{ required: true, message: 'Please enter a question' }]}>
+      <Form.Item label="Question" name="question">
         <TextArea autoSize={{ minRows: 2, maxRows: 6 }} />
       </Form.Item>
 
-      <Form.Item label="Condition tags" name="tags">
+      <Form.Item label="Condition tags" name="_stringTags">
         <Select mode="tags" />
       </Form.Item>
 
-      <Form.Item name="hasFreeText" label="Allow free text if last option was selected" valuePropName="checked">
-        <Switch />
+      <Form.Item name="hasFreeText" label=" " valuePropName="checked">
+        <FormSwitch label="Allow free text if last option was selected" />
       </Form.Item>
 
-      <Form.Item name="altScoring" label="Alternative Scoring" valuePropName="checked">
-        <Switch />
+      <Form.Item noStyle shouldUpdate={typeUpdated}>
+        {({ getFieldValue }) =>
+          getFieldValue('type') === 'multi select' && (
+            <Form.Item label="Scoring type" name="_scoringType">
+              <Select>
+                <Option value="">Weighted average</Option>
+                <Option value="altScoring">Arithmetic Mean</Option>
+                <Option value="altScoringMax">Maximum value of the selected options</Option>
+              </Select>
+            </Form.Item>
+          )
+        }
       </Form.Item>
 
-      <Form.Item name="altScoringMax" label="Alt Scoring Max" valuePropName="checked">
-        <Switch />
+      <Form.Item noStyle shouldUpdate>
+        {({ getFieldValue }) =>
+          getFieldValue('type') === 'single select' && (
+            <>
+              <Form.Item name="autoSelectFirstChoice" label=" " valuePropName="checked">
+                <FormSwitch label="Auto-select first choice" disabled />
+              </Form.Item>
+              <Form.Item name="superScore" label=" " valuePropName="checked">
+                <FormSwitch label="Super Score (for the entire header)" />
+              </Form.Item>
+            </>
+          )
+        }
       </Form.Item>
-
-      {data.type === 'single select' && (
-        <Form.Item name="autoSelectFirstChoice" label="Auto-select first choice" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      )}
-      {data.type === 'single select' && (
-        <Form.Item name="superScore" label="Super Score (for the entire header)" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      )}
     </Form>
   )
 }

@@ -1,7 +1,8 @@
-import { Form, Input, InputNumber, Select, Switch } from 'antd'
+import { Form, Input, InputNumber, Select } from 'antd'
 import { Question } from '../interfaces/ActionCard'
-import { DataService } from '../services/DataService'
-import { useAppContext } from '../hooks/useAppContext'
+import { mapTags } from '../utils/form'
+import FormSwitch from './ui/FormSwitch'
+import { useSaveForm } from '../hooks/useSaveForm'
 
 const { Option } = Select
 
@@ -9,24 +10,33 @@ interface FormProps {
   data: Question
 }
 
-let debounceTimer: number
-
 const QuestionForm: React.FC<FormProps> = ({ data }) => {
   const [form] = Form.useForm()
 
-  const { actionCard, onChange } = useAppContext()
+  const saveForm = useSaveForm()
 
-  interface ChangedValues {
-    [key: string]: unknown
+  const typeUpdated = (prev: Question, curr: Question) => {
+    return prev.type !== curr.type
   }
 
-  const handleFormChange = (changedValues: ChangedValues) => {
-    const newData = { ...data, ...changedValues }
-    clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => {
-      const updatedCard = DataService.update(actionCard!, newData)
-      onChange(updatedCard)
-    }, 1000)
+  const customFormValues = {
+    _stringTags: data.tags?.map(tag => tag.name),
+  }
+
+  const getModifiedData = (changedValues: { _stringTags: string[] }) => {
+    if (changedValues._stringTags) {
+      return {
+        ...data,
+        tags: mapTags(changedValues._stringTags, data),
+      }
+    } else {
+      return { ...data, ...changedValues }
+    }
+  }
+
+  const handleFormChange = (changedValues: { _stringTags: string[] }) => {
+    const newData = getModifiedData(changedValues)
+    saveForm(newData)
   }
 
   return (
@@ -35,10 +45,11 @@ const QuestionForm: React.FC<FormProps> = ({ data }) => {
       form={form}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
-      initialValues={data}
+      initialValues={{ ...data, ...customFormValues }}
       onValuesChange={handleFormChange}
+      colon={false}
     >
-      <Form.Item label="Question" name="text">
+      <Form.Item label="Label" name="text">
         <Input />
       </Form.Item>
 
@@ -56,17 +67,15 @@ const QuestionForm: React.FC<FormProps> = ({ data }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item noStyle shouldUpdate>
+      <Form.Item noStyle shouldUpdate={typeUpdated}>
         {({ getFieldValue }) =>
           (getFieldValue('type') === 'Number' && (
-            <Form.Item name="thousand" label="Show thousand separator" valuePropName="checked">
-              <Switch />
+            <Form.Item name="thousand" label=" " valuePropName="checked">
+              <FormSwitch label="Show thousand separator" />
             </Form.Item>
           )) ||
           (getFieldValue('type') === 'Dropdown' && (
-            <Form.Item label="Data" name="data">
-              {JSON.stringify(getFieldValue('data'))}
-            </Form.Item>
+            <Form.Item label="Data">{JSON.stringify(getFieldValue('data'))}</Form.Item>
           ))
         }
       </Form.Item>
@@ -75,7 +84,7 @@ const QuestionForm: React.FC<FormProps> = ({ data }) => {
         <InputNumber min={1} max={10} />
       </Form.Item>
 
-      <Form.Item label="Condition tags" name="tags">
+      <Form.Item label="Condition tags" name="_stringTags">
         <Select mode="tags" />
       </Form.Item>
 

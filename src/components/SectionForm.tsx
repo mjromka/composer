@@ -1,8 +1,9 @@
-import { Form, Input, Select, Switch } from 'antd'
+import { Form, Input, Select } from 'antd'
 import { Section } from '../interfaces/ActionCard'
-import { DataService } from '../services/DataService'
-import { useAppContext } from '../hooks/useAppContext'
-import { ChangeType } from '../interfaces/ChangeInfo'
+import FormSwitch from './ui/FormSwitch'
+import { useSaveForm } from '../hooks/useSaveForm'
+import { colors } from '../constants/fieldsData'
+import { mapTags } from '../utils/form'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -11,24 +12,39 @@ interface FormProps {
   data: Section
 }
 
-let debounceTimer: number
-
 const SectionForm: React.FC<FormProps> = ({ data }) => {
   const [form] = Form.useForm()
 
-  const { actionCard, onChange } = useAppContext()
+  const saveForm = useSaveForm()
 
-  interface ChangedValues {
-    [key: string]: unknown
+  const typeUpdated = (prev: Section, curr: Section) => {
+    return prev.type !== curr.type
   }
 
-  const handleFormChange = (changedValues: ChangedValues) => {
-    const newData = { ...data, ...changedValues }
-    clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => {
-      const updatedCard = DataService.update(actionCard!, newData)
-      onChange(updatedCard, { type: ChangeType.Edit, key: data.id })
-    }, 1000)
+  const customFormValues = {
+    _stringTags: data.tags?.map(tag => tag.name),
+  }
+
+  const getModifiedData = (changedValues: { _stringTags: string[]; colorCode: string }) => {
+    if (changedValues._stringTags) {
+      return {
+        ...data,
+        tags: mapTags(changedValues._stringTags, data),
+      }
+    } else if (changedValues.colorCode !== undefined) {
+      return {
+        ...data,
+        ...changedValues,
+        color: { color: colors[changedValues.colorCode as keyof typeof colors] },
+      }
+    } else {
+      return { ...data, ...changedValues }
+    }
+  }
+
+  const handleFormChange = (changedValues: { _stringTags: string[]; colorCode: string }) => {
+    const newData = getModifiedData(changedValues)
+    saveForm(newData)
   }
 
   return (
@@ -37,30 +53,28 @@ const SectionForm: React.FC<FormProps> = ({ data }) => {
       form={form}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
-      initialValues={data}
+      initialValues={{ ...data, ...customFormValues }}
       onValuesChange={handleFormChange}
+      colon={false}
     >
       <Form.Item label="Type" name="type">
         <Input disabled />
       </Form.Item>
 
-      <Form.Item label="Color Code" name="colorCode">
+      <Form.Item label="Color" name="colorCode">
         <Select>
-          <Option value={1847}>Green</Option>
-          <Option value={1848}>Yellow</Option>
-          <Option value={1849}>Red</Option>
-          <Option value={1850}>Blue</Option>
-          <Option value={1851}>Grey</Option>
-          <Option value={2259}>Pink</Option>
-          <Option value={2260}>Orange</Option>
-          <Option value={2261}>Turquoise</Option>
-          <Option value={2262}>Purple</Option>
-          <Option value={2263}>Shadow</Option>
-          <Option value={2334}>None</Option>
+          {Object.entries(colors).map(([key, value]) => (
+            <Option key={key}>
+              <div className="flex items-center gap-2">
+                <div className={`w-4 h-4 rounded-sm ${value ? 'shadow-sm' : ''}`} style={{ backgroundColor: value }} />
+                {key}
+              </div>
+            </Option>
+          ))}
         </Select>
       </Form.Item>
 
-      <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter a name' }]}>
+      <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
 
@@ -68,31 +82,32 @@ const SectionForm: React.FC<FormProps> = ({ data }) => {
         <TextArea autoSize={{ minRows: 2, maxRows: 6 }} />
       </Form.Item>
 
-      <Form.Item label="Condition tags" name="tags">
+      <Form.Item label="Condition tags" name="_stringTags">
         <Select mode="tags" />
       </Form.Item>
 
-      <Form.Item name="isAutoCollapse" label="Auto Collapse" valuePropName="checked">
-        <Switch />
+      <Form.Item name="isOpened" label=" " valuePropName="checked">
+        <FormSwitch label="Expand this section by default" />
       </Form.Item>
 
-      <Form.Item name="isRecommendation" label="Limit by score" valuePropName="checked">
-        <Switch />
+      <Form.Item name="isExcludedFromAi" label=" " valuePropName="checked">
+        <FormSwitch label="Exclude from AI analysis" />
       </Form.Item>
 
-      <Form.Item name="isOpened" label="Expand this section by default" valuePropName="checked">
-        <Switch />
+      <Form.Item noStyle shouldUpdate={typeUpdated}>
+        {({ getFieldValue }) =>
+          (getFieldValue('type') === 'Assessment' && (
+            <Form.Item name="isAutoCollapse" label=" " valuePropName="checked">
+              <FormSwitch label="Start with collapsed questions (not scored until expanded)" />
+            </Form.Item>
+          )) ||
+          (getFieldValue('type') === 'Separator' && (
+            <Form.Item name="collapsePreviousHeader" label=" " valuePropName="checked">
+              <FormSwitch label="Auto collapse previous header" />
+            </Form.Item>
+          ))
+        }
       </Form.Item>
-
-      <Form.Item name="isExcludedFromAi" label="Exclude from AI analysis" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-
-      {data.type === 'Separator' && (
-        <Form.Item name="collapsePreviousHeader" label="Auto collapse previous header" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      )}
     </Form>
   )
 }
