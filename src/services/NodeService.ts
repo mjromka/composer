@@ -35,8 +35,8 @@ export const NodeService = {
     return dataList
   },
 
-  getParentKey(key: React.Key, tree: TreeDataNode[]): React.Key {
-    let parentKey: React.Key
+  getParentKey(key: React.Key, tree: TreeDataNode[]): React.Key | undefined {
+    let parentKey: React.Key | undefined
     for (let i = 0; i < tree.length; i++) {
       const node = tree[i]
       if (node.children) {
@@ -47,7 +47,7 @@ export const NodeService = {
         }
       }
     }
-    return parentKey!
+    return parentKey
   },
 }
 
@@ -74,11 +74,11 @@ function mapChildren(section: Section) {
     return section.elements.map(element => {
       switch (element.kind) {
         case ElementKind.ASSESSMENT:
-          return mapAssessment(element as Assessment)
+          return { ...mapAssessment(element as Assessment), draggable: true }
         case ElementKind.RECOMMENDATION:
-          return mapFragment(element as Fragment)
+          return { ...mapFragment(element as Fragment), draggable: true }
         case ElementKind.QUESTION:
-          return mapQuestion(element as Question)
+          return { ...mapQuestion(element as Question), draggable: true }
       }
     })
   }
