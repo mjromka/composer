@@ -1,4 +1,4 @@
-import { ActionCard } from '../interfaces/ActionCard'
+import { ActionCard } from '@playbooks/core/src/ActionCard'
 
 const CDN_URL = `${import.meta.env.VITE_CDN_URL}`
 const MANIFEST_URL = `${CDN_URL}/manifest.json`

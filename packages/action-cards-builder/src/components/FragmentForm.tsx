@@ -1,5 +1,5 @@
 import { Form, Input, Select } from 'antd'
-import { Fragment } from '../interfaces/ActionCard'
+import { Fragment } from '@playbooks/core/src/ActionCard'
 import { mapTags } from '../utils/form'
 import { useSaveForm } from '../hooks/useSaveForm'
 

@@ -1,6 +1,6 @@
 import { Empty, theme } from 'antd'
 import SectionForm from './SectionForm'
-import { Section, Assessment, Question, Fragment } from '../interfaces/ActionCard'
+import { Section, Assessment, Question, Fragment } from '@playbooks/core/src/ActionCard'
 import AssessmentForm from './AssessmentForm'
 import QuestionForm from './QuestionForm'
 import FragmentForm from './FragmentForm'

@@ -1,0 +1,8 @@
+@layer antd, theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); eliminates conflicts with Ant.design styles (equivalent to preflight: false in former config) */
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+.anticon {
+  @apply opacity-75 dark:opacity-100;
+}

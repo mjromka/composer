@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, ReactNode, useMemo } from 'react'
-import { ActionCard } from './interfaces/ActionCard'
+import { ActionCard } from '@playbooks/core/src/ActionCard'
 import { AppContextType } from './interfaces/AppContextType'
 import { useAppContext } from './hooks/useAppContext'
 import { ComposerSettings } from './interfaces/ComposerSettings'

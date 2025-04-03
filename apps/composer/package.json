@@ -1,0 +1,12 @@
+{
+  "name": "composer",
+  "dependencies": {
+    "@playbooks/action-cards-builder": "workspace:*"
+  },
+  "scripts": {
+    "dev": "vite & pnpm --filter action-cards-builder run watch"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}

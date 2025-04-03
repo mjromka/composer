@@ -1,4 +1,12 @@
-import { Section, Assessment, Fragment, Response, Question, ActionCard, ElementKind } from '../interfaces/ActionCard'
+import {
+  Section,
+  Assessment,
+  Fragment,
+  Response,
+  Question,
+  ActionCard,
+  ElementKind,
+} from '@playbooks/core/src/ActionCard'
 import { TreeDataNode } from 'antd'
 import { CheckSquareFilled, ContainerFilled, EditFilled, InfoCircleFilled, LineOutlined } from '@ant-design/icons'
 import React from 'react'

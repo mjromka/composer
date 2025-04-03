@@ -1,29 +1,29 @@
-# Action card composer
+# Linkando Playbooks
 
-Create and edit Action Cards for Linkando Playbooks.
+**Linkando Playbooks** provides a comprehensive solution for the creation, management and support of digital playbooks for processes across diverse industries.
 
-_Scaffolded using [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)._
+It is a monorepo managed with **pnpm**.
 
-## Install
+## Monorepo structure
 
-```bash
-npm i
+The provided structure is not final and includes elements to be added in the future (marked with `~~`). For details about each component, refer to its respective README.md.
+
+```
+│── app/
+│   ├── composer/
+│   ├~~ extension/  # to be moved: Linkando browser extension
+│   ├~~ sidebar/  # to be moved: CMS Sidebar
+│   ├~~ web-play/  # to be moved: CMS Sidebar
+│── packages/  # Elements shared between apps or integrated as libraries to existing solutions
+│   ├── action-cards-builder/
+│   ├~~ action-cards/  # to be moved: UI component for displaying an action card
+│   ├── core/  # Shared types and functions
+│   ├~~ meetings-builder/  # to be developed: # UI component for meeting objects building
+│   ├~~ integrations-builder/  # to be developed: UI component for integrations management
 ```
 
-## Run
+## How to work with the monorepo
 
-```bash
-npm run dev
-```
+Pick an individual project and check its README.md for instructions and available scripts.
 
-## Build
-
-```bash
-npm run build
-```
-
-## Integration
-
-`composer.js` has to be added as script `type=module` to avoid interference from local scripts.
-
-See `index.html` for example
+⚠️ use only `pnpm` as a package manager.
