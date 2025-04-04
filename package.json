@@ -1,0 +1,7 @@
+{
+  "description": "This file is required for `pnpm --filter <package> run <script>` to work without warnings",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}

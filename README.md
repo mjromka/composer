@@ -6,20 +6,20 @@ It is a monorepo managed with **pnpm**.
 
 ## Monorepo structure
 
-The provided structure is not final and includes elements to be added in the future (marked with `~~`). For details about each component, refer to its respective README.md.
+The provided structure is not final and includes elements that will be added in the future (marked with dashed `╌╌`). For details about each component, refer to its respective README.md.
 
 ```
-│── app/
+│── apps/
 │   ├── composer/
-│   ├~~ extension/  # to be moved: Linkando browser extension
-│   ├~~ sidebar/  # to be moved: CMS Sidebar
-│   ├~~ web-play/  # to be moved: CMS Sidebar
+│   ├╌╌ extension/  # to be moved: Linkando browser extension
+│   ├╌╌ sidebar/  # to be moved: CMS Sidebar
+│   ├╌╌ web-play/  # to be moved: CMS Sidebar
 │── packages/  # Elements shared between apps or integrated as libraries to existing solutions
 │   ├── action-cards-builder/
-│   ├~~ action-cards/  # to be moved: UI component for displaying an action card
+│   ├╌╌ action-cards/  # to be moved: UI component for displaying an action card
 │   ├── core/  # Shared types and functions
-│   ├~~ meetings-builder/  # to be developed: # UI component for meeting objects building
-│   ├~~ integrations-builder/  # to be developed: UI component for integrations management
+│   ├╌╌ meetings-builder/  # to be developed: # UI component for meeting objects building
+│   ├╌╌ integrations-builder/  # to be developed: UI component for integrations management
 ```
 
 ## How to work with the monorepo
