@@ -1,5 +1,5 @@
 import { Form, Input, Select } from 'antd'
-import { Assessment } from '../interfaces/ActionCard'
+import { Assessment } from '@playbooks/core/src/ActionCard'
 import FormSwitch from './ui/FormSwitch'
 import { useSaveForm } from '../hooks/useSaveForm'
 import { mapTags } from '../utils/form'

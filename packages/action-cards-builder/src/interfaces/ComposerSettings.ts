@@ -1,4 +1,4 @@
-import { ActionCard } from './ActionCard'
+import { ActionCard } from '@playbooks/core/src/ActionCard'
 import { ChangeInfo } from './ChangeInfo'
 
 export interface ComposerSettings {

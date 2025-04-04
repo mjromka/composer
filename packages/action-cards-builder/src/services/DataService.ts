@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActionCard, Assessment, ElementKind, Fragment, Question } from '../interfaces/ActionCard'
+import { ActionCard, Assessment, ElementKind, Fragment, Question } from '@playbooks/core/src/ActionCard'
 
 export const DataService = {
   getTemplateData: async (template: string) => {

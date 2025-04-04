@@ -6,7 +6,7 @@
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.ignorePaths": [
-    "package-lock.json",
+    "pnpm-lock.yaml",
     "node_modules",
     "vscode-extension",
     ".git/{info,lfs,logs,refs,objects}/**",
@@ -15,7 +15,7 @@
     ".vscode-insiders",
     ".gitignore"
   ],
-  "cSpell.words": ["anticon", "Avenir", "cssinjs", "grayscale", "Linkando", "rgba"],
+  "cSpell.words": ["Collios", "VITE", "antd", "anticon", "Avenir", "cssinjs", "grayscale", "Linkando", "rgba"],
   "files.associations": {
     "*.css": "tailwindcss"
   },

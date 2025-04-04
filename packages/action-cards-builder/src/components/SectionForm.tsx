@@ -1,5 +1,5 @@
 import { Form, Input, Select } from 'antd'
-import { Section } from '../interfaces/ActionCard'
+import { Section } from '@playbooks/core/src/ActionCard'
 import FormSwitch from './ui/FormSwitch'
 import { useSaveForm } from '../hooks/useSaveForm'
 import { colors } from '../constants/fieldsData'

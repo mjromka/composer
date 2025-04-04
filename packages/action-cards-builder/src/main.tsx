@@ -40,7 +40,7 @@ export const initComposer = (containerId: string, settings: ComposerSettings) =>
   createRoot(shadowRoot).render(
     <StrictMode>
       <AppContext settings={settings}>
-        <StyleProvider container={shadowRoot}>
+        <StyleProvider container={shadowRoot} layer>
           <Root container={shadowRoot as unknown as HTMLElement} />
         </StyleProvider>
       </AppContext>
