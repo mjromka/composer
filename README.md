@@ -4,12 +4,7 @@ A modern workspace and template management system with OAuth authentication and 
 
 ## Environment Setup
 
-1. Copy the environment template:
-\`\`\`bash
-cp .env.local.example .env.local
-\`\`\`
-
-2. Configure your environment variables in `.env.local`:
+Configure your environment variables in `.env.local`:
 
 ### OAuth Configuration
 - `NEXT_PUBLIC_OAUTH_AUTH_URL`: Linkando OAuth authorization endpoint
@@ -20,10 +15,6 @@ cp .env.local.example .env.local
 
 ### API Configuration
 - `NEXT_PUBLIC_API_BASE_URL`: Base URL for Composer API
-- `NEXT_PUBLIC_API_WORKSPACES_ENDPOINT`: Workspaces API endpoint
-
-### Demo Mode
-- `NEXT_PUBLIC_DEMO_MODE`: Set to "true" for demo/development mode
 
 ## OAuth Flow
 
@@ -34,18 +25,6 @@ Yes, you need a server-side endpoint to securely exchange the OAuth authorizatio
 1. **Security**: Client secrets must never be exposed to client-side code
 2. **OAuth Standard**: Authorization code flow requires server-side token exchange
 3. **Token Security**: Access tokens should be handled securely on the server
-
-### Real vs Demo Mode
-
-**Demo Mode** (`NEXT_PUBLIC_DEMO_MODE=true`):
-- Simulates OAuth flow without external dependencies
-- Uses mock API responses
-- Perfect for development and testing
-
-**Production Mode** (`NEXT_PUBLIC_DEMO_MODE=false`):
-- Redirects to actual Linkando OAuth provider
-- Makes real API calls to Composer backend
-- Requires valid OAuth credentials
 
 ## Development
 
@@ -58,7 +37,6 @@ npm run dev
 1. Set up environment variables on your hosting platform
 2. Ensure `OAUTH_CLIENT_SECRET` is securely stored
 3. Configure proper redirect URIs in your OAuth provider
-4. Set `NEXT_PUBLIC_DEMO_MODE=false` for production
 
 ## Security Notes
 

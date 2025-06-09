@@ -8,19 +8,17 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Composer - Template Management System",
-  description: "Manage your workspaces and templates with Composer",
-    generator: 'v0.dev'
+  title: "Linkando Composer",
+  description: "Manage your Workspaces and Action Card templates",
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <head>
+        <script src="https://cdn.linkando.com/composer/action-cards-builder.js" type="module" async></script>
+      </head>
+      <body className={`${inter.className} h-dvh`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>

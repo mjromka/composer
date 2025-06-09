@@ -14,19 +14,16 @@ const navigationItems = [
     id: "general",
     label: "General",
     icon: Settings,
-    description: "Basic template information and actions",
   },
   {
     id: "builder",
     label: "Builder",
     icon: Code,
-    description: "Edit template structure and content",
   },
   {
     id: "integrations",
     label: "Integrations",
     icon: Zap,
-    description: "CRM system mappings and connections",
   },
 ]
 
@@ -53,7 +50,6 @@ export function TemplateSidebar({ activeSection, onSectionChange }: TemplateSide
                   <Icon className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   <div className="text-left">
                     <div className="font-medium">{item.label}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{item.description}</div>
                   </div>
                 </div>
               </Button>

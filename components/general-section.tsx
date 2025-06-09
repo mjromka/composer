@@ -9,22 +9,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Save, Copy, Archive, Trash2, Eye } from "lucide-react"
+import { TemplateDetails } from "@/interfaces/template-details"
 
 interface GeneralSectionProps {
-  templateId: string
+  template: TemplateDetails
 }
 
-export function GeneralSection({ templateId }: GeneralSectionProps) {
-  const [templateData, setTemplateData] = useState({
-    name: "Welcome Email Template",
-    description: "Onboarding email for new customers",
-    category: "Email",
-    status: "published",
-    tags: ["onboarding", "welcome", "email"],
-  })
+export function GeneralSection({ template }: GeneralSectionProps) {
+  const [templateData, setTemplateData] = useState(template || {})
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-8 h-full overflow-auto">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">General Settings</h1>
         <p className="text-gray-600">Manage basic template information and perform actions</p>
@@ -33,7 +28,7 @@ export function GeneralSection({ templateId }: GeneralSectionProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Template Information</CardTitle>
+            <CardTitle>Template Settings</CardTitle>
             <CardDescription>Basic details about your template</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -64,10 +59,9 @@ export function GeneralSection({ templateId }: GeneralSectionProps) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Email">Email</SelectItem>
+                  <SelectItem value="Sales">Sales</SelectItem>
                   <SelectItem value="Document">Document</SelectItem>
                   <SelectItem value="Marketing">Marketing</SelectItem>
-                  <SelectItem value="Support">Support</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -83,7 +77,6 @@ export function GeneralSection({ templateId }: GeneralSectionProps) {
                 <SelectContent>
                   <SelectItem value="draft">Draft</SelectItem>
                   <SelectItem value="published">Published</SelectItem>
-                  <SelectItem value="archived">Archived</SelectItem>
                 </SelectContent>
               </Select>
             </div>

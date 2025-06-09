@@ -1,63 +1,87 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { TemplateSidebar } from "@/components/template-sidebar"
 import { GeneralSection } from "@/components/general-section"
 import { BuilderSection } from "@/components/builder-section"
 import { IntegrationsSection } from "@/components/integrations-section"
+import { useAuth } from "@/contexts/auth-context"
+import { fetchTemplate } from "@/services/templates"
+import { ErrorState } from "@/components/error-state"
+import { LoadingState } from "@/components/loading-state"
+import { useWorkspaceStore } from "@/store/workspaceStore"
+import { TemplateDetails } from "@/interfaces/template-details"
 
-export default function TemplateDetailPage({
-  params,
-}: {
-  params: { id: string; templateId: string }
-}) {
+export default function TemplateDetailPage({ params }: { params: { id: string; templateId: string } }) {
   const [activeSection, setActiveSection] = useState("general")
+  const { token } = useAuth()
+  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [templateData, setTemplateData] = useState<TemplateDetails | null>(null)
+  const selectedWorkspace = useWorkspaceStore((state) => state.selectedWorkspace)
 
-  const workspaceName =
-    params.id === "1"
-      ? "Marketing Team"
-      : params.id === "2"
-        ? "Sales Department"
-        : params.id === "3"
-          ? "Customer Support"
-          : "Product Team"
+  const loadTemplate = async (): Promise<void> => {
+    if (!token) {
+      return
+    }
 
-  const templateName =
-    params.templateId === "1"
-      ? "Welcome Email Template"
-      : params.templateId === "2"
-        ? "Sales Proposal Template"
-        : params.templateId === "3"
-          ? "Product Launch Announcement"
-          : "Support Ticket Response"
+    setIsLoading(true)
+    setError("")
 
-  const renderContent = () => {
+    try {
+      const response = await fetchTemplate(token, params.templateId)
+      setTemplateData(response)
+    } catch (err) {
+      console.error("Error loading template JSON:", err)
+      setError("Error connecting to API")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (token) {
+      loadTemplate()
+    }
+  }, [token])
+
+  const renderContent = (template: TemplateDetails) => {
     switch (activeSection) {
       case "general":
-        return <GeneralSection templateId={params.templateId} />
+        return <GeneralSection template={template} />
       case "builder":
-        return <BuilderSection templateId={params.templateId} />
+        return <BuilderSection templateId={params.templateId} dataUrl={template.dataUrl} />
       case "integrations":
         return <IntegrationsSection templateId={params.templateId} />
       default:
-        return <GeneralSection templateId={params.templateId} />
+        return <GeneralSection template={template} />
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen h-full flex flex-col bg-gray-50 dark:bg-gray-950">
       <Header
         breadcrumbs={[
-          { label: "Workspaces", href: "/" },
-          { label: workspaceName, href: `/workspace/${params.id}` },
-          { label: templateName, href: `/workspace/${params.id}/template/${params.templateId}` },
+          { label: selectedWorkspace?.name || "...", href: `/workspace/${params.id}` },
+          { label: templateData?.name || "...", href: `/workspace/${params.id}/template/${params.templateId}` },
         ]}
       />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         <TemplateSidebar activeSection={activeSection} onSectionChange={setActiveSection} />
-        <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-950">{renderContent()}</main>
+        {error && <ErrorState message={error} onRetry={loadTemplate} />}
+        {isLoading ? (
+          <div className="w-full p-8 flex items-center justify-center">
+            <LoadingState title="Loading template" description="Please wait while we fetch your data..." />
+          </div>
+        ) : (
+          <>
+            {templateData && (
+              <main className="flex-1 h-full bg-gray-50 dark:bg-gray-950">{renderContent(templateData)}</main>
+            )}
+          </>
+        )}
       </div>
     </div>
   )

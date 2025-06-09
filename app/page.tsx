@@ -4,24 +4,14 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Building2, RefreshCw } from "lucide-react"
 import { Header } from "@/components/header"
-import { WelcomeCard } from "@/components/welcome-card"
+import { AuthDialog } from "@/components/auth-dialog"
 import { WorkspaceCard } from "@/components/workspace-card"
 import { LoadingState } from "@/components/loading-state"
 import { ErrorState } from "@/components/error-state"
 import { EmptyState } from "@/components/empty-state"
 import { useAuth } from "@/contexts/auth-context"
-import { fetchWorkspaces } from "@/services/api"
-
-interface Workspace {
-  id: string
-  name: string
-  description: string
-  templateCount: number
-  memberCount: number
-  status: "active" | "inactive"
-  createdAt: string
-  updatedAt: string
-}
+import { fetchWorkspaces } from "@/services/workspaces"
+import { Workspace } from "@/interfaces"
 
 export default function WorkspacesPage() {
   const { user, token, initiateOAuth, isLoading: authLoading } = useAuth()
@@ -39,11 +29,7 @@ export default function WorkspacesPage() {
 
     try {
       const response = await fetchWorkspaces(token)
-      if (response.success) {
-        setWorkspaces(response.data)
-      } else {
-        setError("Failed to load workspaces")
-      }
+      setWorkspaces(response)
     } catch (err) {
       console.error("Error loading workspaces:", err)
       setError("Error connecting to API")
@@ -65,9 +51,9 @@ export default function WorkspacesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <Header breadcrumbs={[{ label: "Workspaces", href: "/" }]} />
+      <Header breadcrumbs={[]} />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto p-6">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Workspaces</h1>
@@ -83,9 +69,9 @@ export default function WorkspacesPage() {
           )}
         </div>
 
-        {/* Show welcome card if not authenticated */}
+        {/* Show authentication dialog if not authenticated */}
         {!user || !token ? (
-          <WelcomeCard onLogin={initiateOAuth} isLoading={authLoading} />
+          <AuthDialog onLogin={initiateOAuth} isLoading={authLoading} />
         ) : (
           <>
             {/* Show error if any */}

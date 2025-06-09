@@ -2,29 +2,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  FileText,
-  Mail,
-  FileSpreadsheet,
-  Megaphone,
-  HeadphonesIcon,
-  ArrowRight,
-  Calendar,
-  Clock,
-  Edit3,
-} from "lucide-react"
+import { FileText, FileSpreadsheet, Megaphone, HeadphonesIcon, Calendar, Clock } from "lucide-react"
 import Link from "next/link"
-
-interface Template {
-  id: string
-  name: string
-  description: string
-  category: string
-  lastModified: string
-  status: string
-  author: string
-}
+import { Template } from "@/interfaces"
+import Image from "next/image"
 
 interface TemplateCardProps {
   template: Template
@@ -32,14 +13,14 @@ interface TemplateCardProps {
 }
 
 const categoryIcons = {
-  Email: Mail,
+  Sales: Megaphone,
   Document: FileSpreadsheet,
   Marketing: Megaphone,
   Support: HeadphonesIcon,
 }
 
 const categoryColors = {
-  Email: "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-800",
+  Sales: "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-800",
   Document: "bg-green-100 text-green-700 border-green-200 dark:bg-green-900 dark:text-green-300 dark:border-green-800",
   Marketing:
     "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:border-purple-800",
@@ -83,10 +64,16 @@ export function TemplateCard({ template, workspaceId }: TemplateCardProps) {
     <Link href={`/workspace/${workspaceId}/template/${template.id}`}>
       <Card className="group h-72 flex flex-col bg-white dark:bg-gray-900 border-0 shadow-md hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
         <CardHeader className="flex-shrink-0 pb-4">
-          <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-xl">
-                <CategoryIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                <Image
+                  width={32}
+                  height={32}
+                  src={template.imagePath}
+                  alt={template.name}
+                  className="h-8 w-8 object-cover"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
@@ -143,25 +130,6 @@ export function TemplateCard({ template, workspaceId }: TemplateCardProps) {
               <div className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
                 <span>{formatDate(template.lastModified)}</span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-0 h-auto"
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  // Handle quick edit
-                }}
-              >
-                <Edit3 className="h-3 w-3 mr-1" />
-                Quick Edit
-              </Button>
-              <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all duration-200">
-                <span className="text-sm font-medium">Open</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
               </div>
             </div>
           </div>

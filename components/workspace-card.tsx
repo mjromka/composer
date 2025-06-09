@@ -2,55 +2,42 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Building2, Users, FileText, ArrowRight, Activity } from "lucide-react"
+import { Users, FileText, Activity } from "lucide-react"
 import Link from "next/link"
-
-interface Workspace {
-  id: string
-  name: string
-  description: string
-  templateCount: number
-  memberCount: number
-  status: "active" | "inactive"
-  createdAt: string
-  updatedAt: string
-}
+import { Workspace } from "@/interfaces"
+import { useWorkspaceStore } from "@/store/workspaceStore"
+import Image from "next/image"
 
 interface WorkspaceCardProps {
   workspace: Workspace
 }
 
 export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
+  const { setSelectedWorkspace } = useWorkspaceStore()
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
     })
   }
+  const handleClick = () => {
+    setSelectedWorkspace(workspace)
+  }
 
   return (
-    <Link href={`/workspace/${workspace.id}`}>
-      <Card className="group h-64 flex flex-col bg-white dark:bg-gray-900 border-0 shadow-md hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-        {/* Status indicator bar */}
-        <div
-          className={`h-1 w-full ${
-            workspace.status === "active"
-              ? "bg-gradient-to-r from-green-400 to-emerald-500"
-              : "bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700"
-          }`}
-        />
-
+    <Link href={`/workspace/${workspace.id}`} onClick={handleClick}>
+      <Card className="group h-full flex flex-col bg-white dark:bg-gray-900 border-0 shadow-md hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
         <CardHeader className="flex-shrink-0 pb-3 pt-6">
-          <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div
-                className={`p-2 rounded-xl ${
-                  workspace.status === "active"
-                    ? "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
-                }`}
-              >
-                <Building2 className="h-5 w-5" />
+              <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-xl">
+                <Image
+                  width={32}
+                  height={32}
+                  src={workspace.imagePath}
+                  alt={workspace.name}
+                  className="w-8 h-8 object-cover"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight">
@@ -59,19 +46,14 @@ export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
               </div>
             </div>
             <Badge
-              variant={workspace.status === "active" ? "default" : "secondary"}
+              variant="secondary"
               className={`ml-2 flex-shrink-0 ${
-                workspace.status === "active"
-                  ? "bg-green-100 text-green-700 border-green-200 dark:bg-green-900 dark:text-green-300 dark:border-green-800"
-                  : "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700"
+                workspace.accessType === "owner"
+                  ? "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900 dark:text-teal-300 dark:border-teal-800"
+                  : "bg-gray-200 text-gray-700 border-gray-300 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700"
               }`}
             >
-              <div
-                className={`w-2 h-2 rounded-full mr-1 ${
-                  workspace.status === "active" ? "bg-green-500" : "bg-gray-400"
-                }`}
-              />
-              {workspace.status}
+              {workspace.accessType}
             </Badge>
           </div>
           <CardDescription className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed">
@@ -103,10 +85,6 @@ export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
             <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
               <Activity className="h-3 w-3" />
               <span>Updated {formatDate(workspace.updatedAt)}</span>
-            </div>
-            <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all duration-200">
-              <span className="text-sm font-medium">Open</span>
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
             </div>
           </div>
         </CardContent>

@@ -4,12 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Lock, Loader2 } from "lucide-react"
 
-interface WelcomeCardProps {
+interface AuthViewProps {
   onLogin: () => void
   isLoading: boolean
 }
 
-export function WelcomeCard({ onLogin, isLoading }: WelcomeCardProps) {
+export function AuthDialog({ onLogin, isLoading }: AuthViewProps) {
   return (
     <div className="flex items-center justify-center py-16">
       <Card className="max-w-md w-full border-0 shadow-xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
@@ -46,13 +46,6 @@ export function WelcomeCard({ onLogin, isLoading }: WelcomeCardProps) {
               </>
             )}
           </Button>
-
-          <div className="mt-6 p-4 bg-white/50 dark:bg-gray-900/50 rounded-xl border border-blue-200 dark:border-blue-800">
-            <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">🚀 Demo Mode Active</p>
-            <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
-              Click the button above to simulate the OAuth authentication process.
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>

@@ -10,10 +10,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronRight, Settings, LogOut, User } from "lucide-react"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Settings, LogOut, User } from "lucide-react"
 import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Fragment } from "react"
+import Image from "next/image"
 
 interface Breadcrumb {
   label: string
@@ -32,30 +42,45 @@ export function Header({ breadcrumbs }: HeaderProps) {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-              Composer
+            <Image width={32} height={32} src="/linkando.png" alt="Linkando" />
+            <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white font-mono">
+              COMPOSER
             </Link>
-            {breadcrumbs.map((breadcrumb, index) => (
-              <div key={index} className="flex items-center">
-                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 mx-2" />
-                <Link
-                  href={breadcrumb.href}
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                >
-                  {breadcrumb.label}
-                </Link>
-              </div>
-            ))}
+            <Breadcrumb className="hidden sm:block">
+              <BreadcrumbList>
+                {breadcrumbs.map((breadcrumb, index) =>
+                  index < breadcrumbs.length - 1 ? (
+                    <Fragment key={breadcrumb.href}>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                          <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                    </Fragment>
+                  ) : (
+                    <Fragment key={breadcrumb.href}>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage>{breadcrumb.label}</BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </Fragment>
+                  ),
+                )}
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
 
           <div className="flex items-center space-x-4">
-            <ThemeToggle />
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.avatar || "/placeholder.svg?height=32&width=32"} alt={user.name} />
+                      <AvatarImage src={user.avatar} alt={user.name} />
                       <AvatarFallback>
                         {user.name
                           .split(" ")
@@ -92,7 +117,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
               <Button
                 onClick={initiateOAuth}
                 disabled={isLoading}
-                className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white"
+                className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white hidden sm:block"
               >
                 {isLoading ? "Connecting..." : "Login with Linkando"}
               </Button>

@@ -64,7 +64,7 @@ export function IntegrationsSection({ templateId }: IntegrationsSectionProps) {
   const [activeIntegration, setActiveIntegration] = useState("salesforce")
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-8 h-full overflow-auto">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">CRM Integrations</h1>
         <p className="text-gray-600">Map template fields to your CRM system fields</p>

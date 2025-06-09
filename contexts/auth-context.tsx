@@ -2,13 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { clientConfig } from "@/lib/config"
-
-interface User {
-  id: string
-  name: string
-  email: string
-  avatar?: string
-}
+import { User } from "@/interfaces"
 
 interface AuthContextType {
   user: User | null
@@ -61,37 +55,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const state = generateState()
     localStorage.setItem("oauth_state", state)
 
-    if (clientConfig.demo.enabled) {
-      // Demo mode: simulate OAuth flow
-      simulateOAuthFlow(state)
-    } else {
-      // Real OAuth: redirect to provider
-      const authUrl = new URL(clientConfig.oauth.authUrl)
-      authUrl.searchParams.set("client_id", clientConfig.oauth.clientId)
-      authUrl.searchParams.set("redirect_uri", clientConfig.oauth.redirectUri)
-      authUrl.searchParams.set("scope", clientConfig.oauth.scope)
-      authUrl.searchParams.set("response_type", "code")
-      authUrl.searchParams.set("state", state)
+    // Real OAuth: redirect to provider
+    const authUrl = new URL(clientConfig.oauth.authUrl)
+    authUrl.searchParams.set("client_id", clientConfig.oauth.clientId)
+    authUrl.searchParams.set("redirect_uri", clientConfig.oauth.redirectUri)
+    authUrl.searchParams.set("scope", clientConfig.oauth.scope)
+    authUrl.searchParams.set("response_type", "code")
+    authUrl.searchParams.set("state", state)
 
-      window.location.href = authUrl.toString()
-    }
-  }
-
-  const simulateOAuthFlow = async (state: string): Promise<void> => {
-    setIsLoading(true)
-
-    // Simulate OAuth provider redirect and user interaction
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    // Mock successful OAuth response
-    const mockCode = "demo_auth_code_" + Date.now()
-
-    // Simulate redirect back to our app with code
-    const newUrl = `${window.location.origin}?code=${mockCode}&state=${state}`
-    window.history.pushState({}, "", newUrl)
-
-    // Handle the callback
-    await handleOAuthCallback(mockCode, state)
+    window.location.href = authUrl.toString()
   }
 
   const handleOAuthCallback = async (code: string, state: string): Promise<void> => {
@@ -101,8 +73,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Verify state parameter
       const storedState = localStorage.getItem("oauth_state")
       if (state !== storedState) {
-        throw new Error("Invalid state parameter")
+        //throw new Error("Invalid state parameter")
+        console.error("Invalid state parameter")
+        return
       }
+      localStorage.removeItem("oauth_state")
 
       // Exchange code for token using our server endpoint
       const response = await fetch("/api/auth/token", {
@@ -119,13 +94,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const data = await response.json()
 
-      if (data.success && data.token && data.user) {
+      if (data.success && data.token) {
         setToken(data.token.access_token)
-        setUser(data.user)
+        // get user by API
+        const userResponse = await fetch(`${clientConfig.api.baseUrl}/people/get`, {
+          headers: {
+            Authorization: `Bearer ${data.token.access_token}`,
+          },
+        })
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json()
+          const user: User = {
+            id: userData.id,
+            name: userData.fullName,
+            email: userData.email,
+            avatar: userData.avatar || undefined,
+          }
+          setUser(user)
+          localStorage.setItem("composer_user", JSON.stringify(user))
+        }
 
         // Store in localStorage
         localStorage.setItem("composer_token", data.token.access_token)
-        localStorage.setItem("composer_user", JSON.stringify(data.user))
 
         // Clean up OAuth state and URL
         localStorage.removeItem("oauth_state")
@@ -148,6 +139,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("composer_token")
     localStorage.removeItem("composer_user")
     localStorage.removeItem("oauth_state")
+    window.location.href = "/"
   }
 
   return (
