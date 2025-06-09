@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+*.min.js
+*.bundle.js
+coverage/
+.env*
+.vercel/
+package-lock.json
+yarn.lock
