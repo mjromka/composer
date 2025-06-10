@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { use } from "react"
 import { Header } from "@/components/header"
 import { TemplateSidebar } from "@/components/template-sidebar"
 import { GeneralSection } from "@/components/general-section"
@@ -13,7 +14,8 @@ import { LoadingState } from "@/components/loading-state"
 import { useWorkspaceStore } from "@/store/workspaceStore"
 import { TemplateDetails } from "@/interfaces/template-details"
 
-export default function TemplateDetailPage({ params }: { params: { id: string; templateId: string } }) {
+export default function TemplateDetailPage({ params }: { params: Promise<{ id: string; templateId: string }> }) {
+  const unwrappedParams = use(params)
   const [activeSection, setActiveSection] = useState("general")
   const { token } = useAuth()
   const [error, setError] = useState("")
@@ -30,7 +32,7 @@ export default function TemplateDetailPage({ params }: { params: { id: string; t
     setError("")
 
     try {
-      const response = await fetchTemplate(token, params.templateId)
+      const response = await fetchTemplate(token, unwrappedParams.templateId)
       setTemplateData(response)
     } catch (err) {
       console.error("Error loading template JSON:", err)
@@ -51,9 +53,9 @@ export default function TemplateDetailPage({ params }: { params: { id: string; t
       case "general":
         return <GeneralSection template={template} />
       case "builder":
-        return <BuilderSection templateId={params.templateId} dataUrl={template.dataUrl} />
+        return <BuilderSection templateId={unwrappedParams.templateId} dataUrl={template.dataUrl} />
       case "integrations":
-        return <IntegrationsSection templateId={params.templateId} />
+        return <IntegrationsSection templateId={unwrappedParams.templateId} />
       default:
         return <GeneralSection template={template} />
     }
@@ -63,8 +65,11 @@ export default function TemplateDetailPage({ params }: { params: { id: string; t
     <div className="min-h-screen h-full flex flex-col bg-gray-50 dark:bg-gray-950">
       <Header
         breadcrumbs={[
-          { label: selectedWorkspace?.name || "...", href: `/workspace/${params.id}` },
-          { label: templateData?.name || "...", href: `/workspace/${params.id}/template/${params.templateId}` },
+          { label: selectedWorkspace?.name || "...", href: `/workspace/${unwrappedParams.id}` },
+          {
+            label: templateData?.name || "...",
+            href: `/workspace/${unwrappedParams.id}/template/${unwrappedParams.templateId}`,
+          },
         ]}
       />
 

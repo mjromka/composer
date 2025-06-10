@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, use } from "react" // Import React.use
 import { Button } from "@/components/ui/button"
 import { Plus, Search } from "lucide-react"
 import { Header } from "@/components/header"
@@ -14,7 +14,8 @@ import { useAuth } from "@/contexts/auth-context"
 import { LoadingState } from "@/components/loading-state"
 import { ErrorState } from "@/components/error-state"
 
-export default function WorkspaceTemplatesPage({ params }: { params: { id: string } }) {
+export default function WorkspaceTemplatesPage({ params }: { params: Promise<{ id: string }> }) {
+  const unwrappedParams = use(params)
   const [searchTerm, setSearchTerm] = useState("")
   const { token } = useAuth()
   const [templates, setTemplates] = useState<Template[]>([])
@@ -39,7 +40,7 @@ export default function WorkspaceTemplatesPage({ params }: { params: { id: strin
     setError("")
 
     try {
-      const response = await fetchTemplates(token, parseInt(params.id))
+      const response = await fetchTemplates(token, parseInt(unwrappedParams.id))
       setTemplates(response)
     } catch (err) {
       console.error("Error loading templates:", err)
@@ -64,7 +65,7 @@ export default function WorkspaceTemplatesPage({ params }: { params: { id: strin
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <Header breadcrumbs={[{ label: workspaceName, href: `/workspace/${params.id}` }]} />
+      <Header breadcrumbs={[{ label: workspaceName, href: `/workspace/${unwrappedParams.id}` }]} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
@@ -99,7 +100,7 @@ export default function WorkspaceTemplatesPage({ params }: { params: { id: strin
             {filteredTemplates.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredTemplates.map((template) => (
-                  <TemplateCard key={template.id} template={template} workspaceId={params.id} />
+                  <TemplateCard key={template.id} template={template} workspaceId={unwrappedParams.id} />
                 ))}
               </div>
             ) : (
