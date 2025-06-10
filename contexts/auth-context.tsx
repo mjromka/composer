@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { clientConfig } from "@/lib/config"
 import { User } from "@/interfaces"
+import { fetchProfile } from "@/services/people"
 
 interface AuthContextType {
   user: User | null
@@ -96,24 +97,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (data.success && data.token) {
         setToken(data.token.access_token)
-        // get user by API
-        const userResponse = await fetch(`${clientConfig.api.baseUrl}/people/get`, {
-          headers: {
-            Authorization: `Bearer ${data.token.access_token}`,
-          },
-        })
-
-        if (userResponse.ok) {
-          const userData = await userResponse.json()
-          const user: User = {
-            id: userData.id,
-            name: userData.fullName,
-            email: userData.email,
-            avatar: userData.avatar || undefined,
-          }
-          setUser(user)
-          localStorage.setItem("composer_user", JSON.stringify(user))
-        }
+        const user: User = await fetchProfile(data.token.access_token)
+        setUser(user)
+        localStorage.setItem("composer_user", JSON.stringify(user))
 
         // Store in localStorage
         localStorage.setItem("composer_token", data.token.access_token)
