@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Building2, RefreshCw } from "lucide-react"
 import { Header } from "@/components/header"
@@ -19,7 +19,7 @@ export default function WorkspacesPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const loadWorkspaces = async (): Promise<void> => {
+  const loadWorkspaces = useCallback(async (): Promise<void> => {
     if (!token) {
       return
     }
@@ -36,13 +36,13 @@ export default function WorkspacesPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [token])
 
   useEffect(() => {
     if (token) {
       loadWorkspaces()
     }
-  }, [token])
+  }, [token, loadWorkspaces])
 
   const handleCreateWorkspace = (): void => {
     // TODO: Implement workspace creation

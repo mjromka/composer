@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState, use } from "react" // Import React.use
+import { useEffect, useMemo, useState, use, useCallback } from "react" // Import React.use
 import { Button } from "@/components/ui/button"
 import { Plus, Search } from "lucide-react"
 import { Header } from "@/components/header"
@@ -31,7 +31,7 @@ export default function WorkspaceTemplatesPage({ params }: { params: Promise<{ i
     )
   }, [templates, searchTerm])
 
-  const loadTemplates = async (): Promise<void> => {
+  const loadTemplates = useCallback(async (): Promise<void> => {
     if (!token) {
       return
     }
@@ -48,13 +48,13 @@ export default function WorkspaceTemplatesPage({ params }: { params: Promise<{ i
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [token, unwrappedParams.id])
 
   useEffect(() => {
     if (token) {
       loadTemplates()
     }
-  }, [token])
+  }, [token, loadTemplates])
 
   const workspaceName = selectedWorkspace?.name || "Workspace Templates"
 

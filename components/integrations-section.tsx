@@ -44,7 +44,7 @@ const templateFields = [
   "company.address",
 ]
 
-export function IntegrationsSection({ templateId }: IntegrationsSectionProps) {
+export function IntegrationsSection({}: IntegrationsSectionProps) {
   const [mappings, setMappings] = useState({
     salesforce: {
       "user.firstName": "Contact.FirstName",
