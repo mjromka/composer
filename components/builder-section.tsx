@@ -16,11 +16,11 @@ declare global {
 }
 
 interface BuilderSectionProps {
-  templateId: string
   dataUrl: string
+  onChange: (data: unknown, info: unknown) => void
 }
 
-export function BuilderSection({ dataUrl }: BuilderSectionProps) {
+export function BuilderSection({ dataUrl, onChange }: BuilderSectionProps) {
   useEffect(() => {
     const root = document.getElementById("root") as HTMLElement & { __composerInitialized?: boolean }
 
@@ -28,13 +28,11 @@ export function BuilderSection({ dataUrl }: BuilderSectionProps) {
       window.initComposer("root", {
         dataUrl: dataUrl,
         locale: "en-US",
-        onChange: (data: unknown, info: unknown) => {
-          console.log("💾", data, info)
-        },
+        onChange: onChange,
       })
       root.__composerInitialized = true
     }
-  }, [dataUrl])
+  }, [dataUrl, onChange])
 
   return <div className="h-full" id="root"></div>
 }

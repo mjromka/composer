@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { use } from "react"
 import { Header } from "@/components/header"
 import { TemplateSidebar } from "@/components/template-sidebar"
@@ -8,7 +8,7 @@ import { GeneralSection } from "@/components/general-section"
 import { BuilderSection } from "@/components/builder-section"
 import { IntegrationsSection } from "@/components/integrations-section"
 import { useAuth } from "@/contexts/auth-context"
-import { fetchTemplate } from "@/services/templates"
+import { fetchTemplate, saveActionCard } from "@/services/templates"
 import { ErrorState } from "@/components/error-state"
 import { LoadingState } from "@/components/loading-state"
 import { useWorkspaceStore } from "@/store/workspaceStore"
@@ -23,7 +23,7 @@ export default function TemplateDetailPage({ params }: { params: Promise<{ id: s
   const [templateData, setTemplateData] = useState<TemplateDetails | null>(null)
   const selectedWorkspace = useWorkspaceStore((state) => state.selectedWorkspace)
 
-  const loadTemplate = async (): Promise<void> => {
+  const loadTemplate = useCallback(async (): Promise<void> => {
     if (!token) {
       return
     }
@@ -40,20 +40,33 @@ export default function TemplateDetailPage({ params }: { params: Promise<{ id: s
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [token, unwrappedParams.templateId])
 
   useEffect(() => {
     if (token) {
       loadTemplate()
     }
-  }, [token])
+  }, [token, loadTemplate])
+
+  const handleActionCardsChange = useCallback(
+    async (data: unknown, info: unknown): Promise<void> => {
+      console.log("💾", data, info)
+      if (!token || !unwrappedParams.templateId) {
+        console.error("Token or templateId is missing")
+        return
+      }
+
+      await saveActionCard(token, unwrappedParams.templateId, "actionCardsData", data)
+    },
+    [token, unwrappedParams.templateId],
+  )
 
   const renderContent = (template: TemplateDetails) => {
     switch (activeSection) {
       case "general":
         return <GeneralSection template={template} />
       case "builder":
-        return <BuilderSection templateId={unwrappedParams.templateId} dataUrl={template.dataUrl} />
+        return <BuilderSection dataUrl={template.dataUrl} onChange={handleActionCardsChange} />
       case "integrations":
         return <IntegrationsSection templateId={unwrappedParams.templateId} />
       default:

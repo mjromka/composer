@@ -83,3 +83,25 @@ export async function fetchTemplate(token: string, templateId: string): Promise<
     throw error
   }
 }
+
+export async function saveActionCard(token: string, objectId: string, attributeCode: string, data: unknown) {
+  const apiUrl = `${clientConfig.api.baseUrl}/Objects/AttachFiles`
+
+  const utf8Encode = new TextEncoder()
+  const file = new File([utf8Encode.encode(JSON.stringify(data))], "data.json", {
+    type: "application/octet-stream",
+  })
+
+  const formdata = new FormData()
+  formdata.append("file", file)
+
+  const requestOptions: RequestInit = {
+    method: "POST",
+    body: formdata,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  await fetch(`${apiUrl}?objectId=${objectId}&attributeCode=${attributeCode}&replaceExisting=true`, requestOptions)
+}
