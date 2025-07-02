@@ -1,6 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
+import { useAuth } from "@/contexts/auth-context"
+import { TemplateDetails } from "@/interfaces/template-details"
+import { saveActionCard } from "@/services/templates"
+import { useCallback, useEffect } from "react"
 
 declare global {
   interface Window {
@@ -9,30 +12,47 @@ declare global {
       options: {
         dataUrl: string
         locale: string
-        onChange: (data: unknown, info: unknown) => void
+        onChange: (data: { version: number }) => void
+        templateId: string
       },
     ) => void
   }
 }
 
 interface BuilderSectionProps {
-  dataUrl: string
-  onChange: (data: unknown, info: unknown) => void
+  template: TemplateDetails
 }
 
-export function BuilderSection({ dataUrl, onChange }: BuilderSectionProps) {
+export function BuilderSection({ template }: BuilderSectionProps) {
+  const { token } = useAuth()
+
+  const handleActionCardsChange = useCallback(
+    async (data: { version: number }): Promise<void> => {
+      console.log("💾", data)
+      if (!token || !template.id) {
+        console.error("Token or templateId is missing")
+        return
+      }
+      data.version = (data.version || 0) + 1
+
+      await saveActionCard(token, template.id, "actionCardsData", data)
+    },
+    [token, template.id],
+  )
+
   useEffect(() => {
     const root = document.getElementById("root") as HTMLElement & { __composerInitialized?: boolean }
 
-    if (dataUrl && root && !root.__composerInitialized) {
+    if (root && !root.__composerInitialized) {
       window.initComposer("root", {
-        dataUrl: dataUrl,
+        dataUrl: template.dataUrl || "",
         locale: "en-US",
-        onChange: onChange,
+        onChange: handleActionCardsChange,
+        templateId: template.id,
       })
       root.__composerInitialized = true
     }
-  }, [dataUrl, onChange])
+  }, [template.dataUrl, handleActionCardsChange, template.id])
 
   return <div className="h-full" id="root"></div>
 }

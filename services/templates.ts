@@ -50,6 +50,60 @@ export async function fetchTemplates(token: string, workspaceId: number): Promis
   }
 }
 
+export async function createTemplate(token: string, name: string, workspaceId: number): Promise<string> {
+  const apiUrl = `${clientConfig.api.baseUrl}/Objects/Save`
+
+  try {
+    // First create the template object
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        objectTypeId: 301, // Template object type ID
+        name: name,
+        parentId: workspaceId,
+        inheritanceAttribute: "poWorkgroup",
+        attributes: {
+          poWorkgroup: workspaceId,
+        },
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.statusText}`)
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("API Error:", error)
+    throw error
+  }
+}
+
+export async function deleteTemplate(token: string, id: number): Promise<void> {
+  const apiUrl = `${clientConfig.api.baseUrl}/Objects/Delete`
+
+  try {
+    const response = await fetch(`${apiUrl}?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.statusText}`)
+    }
+  } catch (error) {
+    console.error("API Error:", error)
+    throw error
+  }
+}
+
 export async function fetchTemplate(token: string, templateId: string): Promise<TemplateDetails> {
   const apiUrl = `${clientConfig.api.baseUrl}/Objects/Get`
 
@@ -74,7 +128,7 @@ export async function fetchTemplate(token: string, templateId: string): Promise<
       lastModified: data.modifiedDate,
       status: data.isDraft ? "draft" : "published",
       author: "N/A",
-      dataUrl: data.attributes.actionCardsData[0].url,
+      dataUrl: data.attributes.actionCardsData ? data.attributes.actionCardsData[0]?.url : "",
       tags: ["some", "fake", "tags"],
       imagePath: data.imagePath || "",
     }

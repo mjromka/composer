@@ -10,6 +10,9 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Save, Copy, Archive, Trash2, Eye } from "lucide-react"
 import { TemplateDetails } from "@/interfaces/template-details"
+import { deleteTemplate } from "@/services/templates"
+import { useAuth } from "@/contexts/auth-context"
+import { useRouter } from "next/navigation"
 
 interface GeneralSectionProps {
   template: TemplateDetails
@@ -17,6 +20,16 @@ interface GeneralSectionProps {
 
 export function GeneralSection({ template }: GeneralSectionProps) {
   const [templateData, setTemplateData] = useState(template || {})
+  const { token } = useAuth()
+  const router = useRouter()
+
+  const handleDeleteTemplate = async () => {
+    if (!token) {
+      return
+    }
+    await deleteTemplate(token, parseInt(template.id))
+    router.back()
+  }
 
   return (
     <div className="space-y-6 p-8 h-full overflow-auto">
@@ -102,7 +115,7 @@ export function GeneralSection({ template }: GeneralSectionProps) {
                 <Archive className="h-4 w-4 mr-2" />
                 Archive Template
               </Button>
-              <Button variant="destructive" className="justify-start">
+              <Button variant="destructive" className="justify-start" onClick={handleDeleteTemplate}>
                 <Trash2 className="h-4 w-4 mr-2" />
                 Delete Template
               </Button>

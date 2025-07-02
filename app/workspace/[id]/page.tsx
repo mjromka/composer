@@ -2,24 +2,27 @@
 
 import { useEffect, useMemo, useState, use, useCallback } from "react" // Import React.use
 import { Button } from "@/components/ui/button"
-import { Plus, Search } from "lucide-react"
+import { Loader2, Plus, Search } from "lucide-react"
 import { Header } from "@/components/header"
 import { TemplateCard } from "@/components/template-card"
 import { SearchBar } from "@/components/search-bar"
 import { EmptyState } from "@/components/empty-state"
 import { useWorkspaceStore } from "@/store/workspaceStore"
 import { Template } from "@/interfaces"
-import { fetchTemplates } from "@/services/templates"
+import { createTemplate, fetchTemplates } from "@/services/templates"
 import { useAuth } from "@/contexts/auth-context"
 import { LoadingState } from "@/components/loading-state"
 import { ErrorState } from "@/components/error-state"
+import { useRouter } from "next/navigation"
 
 export default function WorkspaceTemplatesPage({ params }: { params: Promise<{ id: string }> }) {
+  const router = useRouter()
   const unwrappedParams = use(params)
   const [searchTerm, setSearchTerm] = useState("")
   const { token } = useAuth()
   const [templates, setTemplates] = useState<Template[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState("")
   const selectedWorkspace = useWorkspaceStore((state) => state.selectedWorkspace)
   const filteredTemplates = useMemo(() => {
@@ -58,9 +61,26 @@ export default function WorkspaceTemplatesPage({ params }: { params: Promise<{ i
 
   const workspaceName = selectedWorkspace?.name || "Workspace Templates"
 
-  const handleCreateTemplate = (): void => {
-    // TODO: Implement template creation
-    console.log("Create template clicked")
+  const handleCreateTemplate = async (): Promise<void> => {
+    if (!token) {
+      return
+    }
+
+    setIsCreating(true)
+    setError("")
+
+    try {
+      // Create a new template with default values
+      const templateId = await createTemplate(token, "New Template", parseInt(unwrappedParams.id))
+
+      // Navigate to the new template page
+      router.push(`/workspace/${unwrappedParams.id}/template/${templateId}`)
+    } catch (err) {
+      console.error("Error creating template:", err)
+      setError("Error creating template")
+    } finally {
+      setIsCreating(false)
+    }
   }
 
   return (
@@ -78,9 +98,19 @@ export default function WorkspaceTemplatesPage({ params }: { params: Promise<{ i
           <Button
             onClick={handleCreateTemplate}
             className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+            disabled={isCreating}
           >
-            <Plus className="h-4 w-4 mr-2" />
-            New Template
+            {isCreating ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Creating...
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4 mr-2" />
+                New Template
+              </>
+            )}
           </Button>
         </div>
 

@@ -8,7 +8,7 @@ import { GeneralSection } from "@/components/general-section"
 import { BuilderSection } from "@/components/builder-section"
 import { IntegrationsSection } from "@/components/integrations-section"
 import { useAuth } from "@/contexts/auth-context"
-import { fetchTemplate, saveActionCard } from "@/services/templates"
+import { fetchTemplate } from "@/services/templates"
 import { ErrorState } from "@/components/error-state"
 import { LoadingState } from "@/components/loading-state"
 import { useWorkspaceStore } from "@/store/workspaceStore"
@@ -48,25 +48,12 @@ export default function TemplateDetailPage({ params }: { params: Promise<{ id: s
     }
   }, [token, loadTemplate])
 
-  const handleActionCardsChange = useCallback(
-    async (data: unknown, info: unknown): Promise<void> => {
-      console.log("💾", data, info)
-      if (!token || !unwrappedParams.templateId) {
-        console.error("Token or templateId is missing")
-        return
-      }
-
-      await saveActionCard(token, unwrappedParams.templateId, "actionCardsData", data)
-    },
-    [token, unwrappedParams.templateId],
-  )
-
   const renderContent = (template: TemplateDetails) => {
     switch (activeSection) {
       case "general":
         return <GeneralSection template={template} />
       case "builder":
-        return <BuilderSection dataUrl={template.dataUrl} onChange={handleActionCardsChange} />
+        return <BuilderSection template={template} />
       case "integrations":
         return <IntegrationsSection templateId={unwrappedParams.templateId} />
       default:
